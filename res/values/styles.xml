@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+   <style name="WindowTitleBackground">     
+	    <item name="android:paddingLeft">6dip</item>
+        <item name="android:background">@drawable/title_bg</item>               
+    </style>
+</resources>

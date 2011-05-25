@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Knucklehead</string>
+    <string name="weight_prompt">Weight Class</string>
+    <string name="association_prompt">MMA Association</string>
+</resources>
