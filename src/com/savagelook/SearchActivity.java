@@ -69,18 +69,7 @@ public class SearchActivity extends Activity {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							URL urlObject = new URL(searchUrl);
-							HttpURLConnection urlConn = (HttpURLConnection)urlObject.openConnection();
-							urlConn.setConnectTimeout(5000);
-							InputStream is = new BufferedInputStream(urlConn.getInputStream());
-							
-							ByteArrayBuffer bab = new ByteArrayBuffer(is.available());
-							int current = 0;
-							while ((current = is.read()) != -1) {
-								bab.append((byte)current);	
-							}
-							urlConn.disconnect();
-							searchJson = new JSONObject(new String(bab.toByteArray()));
+							searchJson = JsonHelper.getJsonObjectFromUrl(searchUrl, 5000, 5000);
 						} catch (SocketTimeoutException e) {
 							searchJson = null;
 					    } catch (Exception e) {
@@ -107,8 +96,7 @@ public class SearchActivity extends Activity {
     }
     
     private String constructSearchUrl() {
-	    //String url = "http://192.168.98.101:8888/knucklehead/ff.php?";
-	    	String url = "http://10.255.11.59:8888/knucklehead/ff.php?";
+	    	String url = ((Knucklehead)getApplicationContext()).getProxy();
 	    	String params = "";
 	    	
 	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());
@@ -174,17 +162,12 @@ public class SearchActivity extends Activity {
         s.setAdapter(adapter);	
         
         try {
-		    InputStream is = this.getResources().openRawResource(jsonId);
-		    byte [] buffer = new byte[is.available()];
-		    while (is.read(buffer) != -1);
-		    String jsontext = new String(buffer);
-		    JSONArray entries = new JSONArray(jsontext);
-		    
+	        	JSONArray entries = JsonHelper.getJsonArrayFromResource(this, jsonId);
 		    for (int i = 0; i < entries.length(); i++) {
 			    	JSONObject pair = entries.getJSONObject(i);
 			    adapter.add(new KeyValuePair(pair.getString("k"), pair.getString("v")));
 		    }
-        } catch (Exception ex) {
+        } catch (Exception e) {
 	        	// do something
         }
     }

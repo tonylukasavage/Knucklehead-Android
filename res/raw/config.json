@@ -1,0 +1,5 @@
+{
+	"proxy":"http://10.255.11.47:8888/knucklehead/ff.php?",
+	"connectTimeout":"5000",
+	"readTimeout":"5000"
+}

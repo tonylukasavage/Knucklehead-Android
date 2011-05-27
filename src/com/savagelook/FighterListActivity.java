@@ -64,18 +64,7 @@ public class FighterListActivity extends ListActivity {
 					new Thread(new Runnable() {
 						public void run() {
 							try {
-								URL urlObject = new URL(urlString);
-								HttpURLConnection urlConn = (HttpURLConnection)urlObject.openConnection();
-								urlConn.setConnectTimeout(5000);
-								InputStream is = new BufferedInputStream(urlConn.getInputStream());
-								
-								ByteArrayBuffer bab = new ByteArrayBuffer(is.available());
-								int current = 0;
-								while ((current = is.read()) != -1) {
-									bab.append((byte)current);	
-								}
-								urlConn.disconnect();
-								fighterJson = new JSONObject(new String(bab.toByteArray()));
+								fighterJson = JsonHelper.getJsonObjectFromUrl(urlString, 5000, 5000);
 							} catch (SocketTimeoutException e) {
 								fighterJson = null;
 						    } catch (Exception e) {
@@ -85,17 +74,11 @@ public class FighterListActivity extends ListActivity {
 						    fighterHandler.post(handleFighterJson);
 						}
 					}).start();
-					
-					
-					//Intent intent = new Intent(FighterListActivity.this, FighterTabActivity.class);
-					//intent.putExtra("link", fighter.getLink());
-					//startActivity(intent);
 				}
 			});
 		} catch (Exception e) {
 			Log.e("FighterListActivity.onCreate()", e.getMessage());
 		}
-		
     }
     
     private Runnable handleFighterJson = new Runnable() {
@@ -135,7 +118,7 @@ public class FighterListActivity extends ListActivity {
 	
 	private String constructFighterUrl(String fighterUrl) {
 	    	//return "http://192.168.98.101:8888/knucklehead/ff.php?link=" + qfix(fighterUrl);
-		return "http://10.255.11.59:8888/knucklehead/ff.php?link=" + qfix(fighterUrl);
+		return "http://10.255.11.47:8888/knucklehead/ff.php?link=" + qfix(fighterUrl);
 	}
     
     @Override
