@@ -36,27 +36,26 @@ public final class R {
         public static final int title_bg=0x7f020012;
     }
     public static final class id {
-        public static final int fight_list=0x7f080002;
+        public static final int fight_list=0x7f080004;
         public static final int fighter_image=0x7f080000;
         public static final int fighter_name=0x7f080005;
-        public static final int fighter_name1=0x7f080003;
+        public static final int fighter_name1=0x7f080001;
         public static final int fighter_nickname=0x7f080006;
-        public static final int fighter_nickname1=0x7f080004;
+        public static final int fighter_nickname1=0x7f080002;
         public static final int firstname=0x7f080007;
         public static final int lastname=0x7f080008;
         public static final int nickname=0x7f080009;
-        public static final int profile_view=0x7f080001;
+        public static final int profile_view=0x7f080003;
         public static final int search=0x7f08000b;
         public static final int weightclasses=0x7f08000a;
     }
     public static final class layout {
-        public static final int detail=0x7f030000;
-        public static final int detail2=0x7f030001;
-        public static final int detail_tab=0x7f030002;
-        public static final int fight_record=0x7f030003;
-        public static final int fighter_list_item2=0x7f030004;
-        public static final int list_item=0x7f030005;
-        public static final int main=0x7f030006;
+        public static final int detail2=0x7f030000;
+        public static final int detail_tab=0x7f030001;
+        public static final int fight_record=0x7f030002;
+        public static final int fighter_list_item2=0x7f030003;
+        public static final int list_item=0x7f030004;
+        public static final int main=0x7f030005;
     }
     public static final class raw {
         public static final int config=0x7f040000;
