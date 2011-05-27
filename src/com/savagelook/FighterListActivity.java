@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class FighterListActivity extends ListActivity {
 	private Handler fighterHandler;
 	private String urlString;
 	private JSONObject fighterJson;
+	private ProgressDialog progressDialog;
 	
     /** Called when the activity is first created. */
     @Override
@@ -59,6 +61,8 @@ public class FighterListActivity extends ListActivity {
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					Fighter fighter = fighters.get(position);
 					urlString = constructFighterUrl(fighter.getLink());
+					
+					progressDialog = ProgressDialog.show(FighterListActivity.this, "", "Loading fighter profile...", true);
 					
 					// loading animation
 					new Thread(new Runnable() {
@@ -106,8 +110,7 @@ public class FighterListActivity extends ListActivity {
 				Toast.makeText(FighterListActivity.this, "There was an exception processing your search. Try again.", 3000).show();
 				Log.e("runnable", e.getMessage());
 			} finally {
-				//((Button)findViewById(R.id.search)).setEnabled(true);
-				//((ProgressBar)findViewById(R.id.loadingAnimation)).setVisibility(View.INVISIBLE);	
+				progressDialog.dismiss();	
 			}
 		}
     };
@@ -117,8 +120,7 @@ public class FighterListActivity extends ListActivity {
 	}
 	
 	private String constructFighterUrl(String fighterUrl) {
-	    	//return "http://192.168.98.101:8888/knucklehead/ff.php?link=" + qfix(fighterUrl);
-		return "http://10.255.11.47:8888/knucklehead/ff.php?link=" + qfix(fighterUrl);
+		return ((Knucklehead)getApplicationContext()).getProxy() + "link=" + qfix(fighterUrl);
 	}
     
     @Override
