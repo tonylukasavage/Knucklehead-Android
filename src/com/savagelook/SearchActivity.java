@@ -1,17 +1,13 @@
 package com.savagelook;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
-import java.net.URL;
 
-import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +21,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -35,6 +30,7 @@ public class SearchActivity extends Activity {
 	private Handler searchHandler;
 	private JSONObject searchJson;
 	private String searchUrl;
+	private ProgressDialog progressDialog;
 	
     /** Called when the activity is first created. */
     @Override
@@ -62,9 +58,8 @@ public class SearchActivity extends Activity {
 					toast.show();
 					return;
 				}
-				
-				((Button)findViewById(R.id.search)).setEnabled(false);
-				((ProgressBar)findViewById(R.id.loadingAnimation)).setVisibility(View.VISIBLE);
+
+				progressDialog = ProgressDialog.show(SearchActivity.this, "", "Searching for fighters...", true);
 				
 				new Thread(new Runnable() {
 					public void run() {
@@ -148,9 +143,8 @@ public class SearchActivity extends Activity {
 			} catch (JSONException e) {
 				Toast.makeText(SearchActivity.this, "There was an exception processing your search. Try again.", 3000).show();
 				Log.e("runnable", e.getMessage());
-			} finally {
-				((Button)findViewById(R.id.search)).setEnabled(true);
-				((ProgressBar)findViewById(R.id.loadingAnimation)).setVisibility(View.INVISIBLE);	
+			} finally {	
+				progressDialog.dismiss();
 			}
 		}
     };

@@ -44,10 +44,9 @@ public final class R {
         public static final int fighter_nickname1=0x7f080004;
         public static final int firstname=0x7f080007;
         public static final int lastname=0x7f080008;
-        public static final int loadingAnimation=0x7f08000b;
         public static final int nickname=0x7f080009;
         public static final int profile_view=0x7f080001;
-        public static final int search=0x7f08000c;
+        public static final int search=0x7f08000b;
         public static final int weightclasses=0x7f08000a;
     }
     public static final class layout {

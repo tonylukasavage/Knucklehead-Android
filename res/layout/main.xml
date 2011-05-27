@@ -51,34 +51,19 @@
 		android:prompt="@string/association_prompt"
 	/>
 	-->
-	<LinearLayout
-		android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="right"
-		>
-		<ProgressBar
-			android:id="@+id/loadingAnimation"
-			android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        style="@android:style/Widget.ProgressBar"
-	        android:layout_gravity="center_vertical"
-	        android:paddingRight="20dip"
-	        android:visibility="invisible"
-			/>
-		<Button
-			android:id="@+id/search"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingLeft="20dip"
-			android:paddingRight="20dip"
-			android:text="Search"
-			android:textSize="28dip"
-			android:shadowColor="#F000"
-			android:shadowDx="2.0"
-			android:shadowDy="2.0"
-			android:shadowRadius="2.0"
-			android:background="@drawable/search_button"
-		/>
-	</LinearLayout>
+	<Button
+		android:id="@+id/search"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="20dip"
+		android:paddingRight="20dip"
+		android:layout_marginTop="10dip"
+		android:text="Search"
+		android:textSize="28dip"
+		android:shadowColor="#F000"
+		android:shadowDx="2.0"
+		android:shadowDy="2.0"
+		android:shadowRadius="2.0"
+		android:background="@drawable/search_button"
+	/>
 </LinearLayout>
