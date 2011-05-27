@@ -48,7 +48,7 @@ public class FighterListActivity extends ListActivity {
 			    	Fighter fighter = new Fighter(jsonFighters.getJSONObject(i));
 			    fighters.add(fighter);
 		    }
-			this.setListAdapter(new FighterAdapter(this, R.layout.fighter_list_item2, fighters));
+			this.setListAdapter(new FighterAdapter(this, R.layout.listitem_fighter, fighters));
 			
 			ListView list = getListView();
 			list.setOnItemClickListener(new OnItemClickListener() {
@@ -139,7 +139,7 @@ public class FighterListActivity extends ListActivity {
 			View v = convertView;
 			if (v == null) {
 				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            v = vi.inflate(R.layout.fighter_list_item2, null);	
+	            v = vi.inflate(R.layout.listitem_fighter, null);	
 			}
 			
 			final Fighter fighter = fighters.get(position);

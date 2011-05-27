@@ -23,7 +23,7 @@ public class FighterProfileActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail2);
+        setContentView(R.layout.tab_profile);
         
         try {
 			JSONObject json = new JSONObject(getIntent().getStringExtra("json"));

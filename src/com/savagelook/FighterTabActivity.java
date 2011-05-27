@@ -10,7 +10,7 @@ public class FighterTabActivity extends TabActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_tab);
+        setContentView(R.layout.activity_fightertab);
         
         Resources res = getResources(); // Resource object to get Drawables
         TabHost tabHost = getTabHost();  // The activity TabHost
