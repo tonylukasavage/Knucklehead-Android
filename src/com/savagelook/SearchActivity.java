@@ -30,15 +30,17 @@ public class SearchActivity extends Activity {
 	private Handler searchHandler;
 	private JSONObject searchJson;
 	private String searchUrl;
-	private ProgressDialog progressDialog;
+	private ProgressDialog progressDialog = null;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        
         searchHandler = new Handler();
         searchJson = null;
+        progressDialog = null;
         
         this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);
         //this.setupKeyValueSpinner(R.id.organizations, R.raw.organizations);  
@@ -59,7 +61,11 @@ public class SearchActivity extends Activity {
 					return;
 				}
 
-				progressDialog = ProgressDialog.show(SearchActivity.this, "", "Searching for fighters...", true);
+				if (progressDialog == null) {
+					progressDialog = ProgressDialog.show(SearchActivity.this, "", "Searching for fighters...", true);
+				} else {
+					return;	
+				}
 				
 				new Thread(new Runnable() {
 					public void run() {
@@ -145,6 +151,7 @@ public class SearchActivity extends Activity {
 				Log.e("runnable", e.getMessage());
 			} finally {	
 				progressDialog.dismiss();
+				progressDialog = null;
 			}
 		}
     };

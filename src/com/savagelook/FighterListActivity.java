@@ -39,6 +39,7 @@ public class FighterListActivity extends ListActivity {
         this.getListView().setSelector(R.color.titlebackgroundcolor);
         fighterHandler = new Handler();
         fighterJson = null;
+        progressDialog = null;
  
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
@@ -57,7 +58,11 @@ public class FighterListActivity extends ListActivity {
 					Fighter fighter = fighters.get(position);
 					urlString = constructFighterUrl(fighter.getLink());
 					
-					progressDialog = ProgressDialog.show(FighterListActivity.this, "", "Loading fighter profile...", true);
+					if (progressDialog == null) {
+						progressDialog = ProgressDialog.show(FighterListActivity.this, "", "Loading fighter profile...", true);
+					} else {
+						return;	
+					}
 					
 					// loading animation
 					new Thread(new Runnable() {
@@ -106,6 +111,7 @@ public class FighterListActivity extends ListActivity {
 				Log.e("runnable", e.getMessage());
 			} finally {
 				progressDialog.dismiss();	
+				progressDialog = null;
 			}
 		}
     };
