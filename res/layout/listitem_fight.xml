@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:textSize="16sp" 
-    android:background="@drawable/item_bg">
-</TextView>
+    android:layout_height="wrap_content"  
+    android:orientation="vertical"
+    >
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"  
+	    android:orientation="horizontal"
+	    android:background="#440000"
+	    android:padding="3dip"
+	    >
+	    <TextView
+		    android:id="@+id/fight_event_name"
+		    android:layout_height="wrap_content"
+		    android:layout_width="0dip"
+		    android:layout_weight="1"
+		    android:textColor="#eeeeee"
+		    />
+		<TextView
+		    android:id="@+id/fight_date"
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:layout_gravity="right"
+		    android:textColor="#eeeeee"
+		    />
+    </LinearLayout>
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="?android:attr/listPreferredItemHeight"  
+	    android:orientation="horizontal"
+	    android:layout_gravity="center_vertical"
+	    android:background="#000000"
+	    >
+	    <TextView
+		    android:id="@+id/fight_result"
+		    android:layout_height="fill_parent"
+		    android:layout_width="50dip"
+		    android:textColor="#ffffff"
+		    android:gravity="center"
+		    />
+		<TextView
+		    android:text="testing"
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:layout_gravity="right"
+		    android:textColor="#ffffff"
+		    />
+    </LinearLayout>
+</LinearLayout>

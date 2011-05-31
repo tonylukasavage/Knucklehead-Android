@@ -34,9 +34,7 @@ public class FighterListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.getListView().setDivider( null );
-        //this.getListView().setDividerHeight(0);
-        //this.getListView().setSelector(R.color.titlebackgroundcolor);
+
         fighterHandler = new Handler();
         fighterJson = null;
         progressDialog = null;
