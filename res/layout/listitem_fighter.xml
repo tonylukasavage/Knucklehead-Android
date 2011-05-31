@@ -5,7 +5,7 @@
 			  android:layout_width="fill_parent"
 			  android:gravity="center_vertical"
 			  android:layout_weight="1"
-			  android:background="@drawable/item_bg_grad"
+			  
 			  >
 	<LinearLayout 
 		android:orientation="vertical"
@@ -23,6 +23,11 @@
 				  android:maxLines="1"
 				  android:singleLine="true"
 				  android:ellipsize="marquee"
+				  android:textColor="#ffffff"
+				  android:shadowColor="#aaaaaa"
+				  android:shadowDx="1"
+				  android:shadowDy="1"
+				  android:shadowRadius="1.5"
 				  >
 		</TextView>
 		<TextView android:id="@+id/fighter_nickname"

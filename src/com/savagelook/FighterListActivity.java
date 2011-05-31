@@ -34,9 +34,9 @@ public class FighterListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getListView().setDivider( null );
-        this.getListView().setDividerHeight(0);
-        this.getListView().setSelector(R.color.titlebackgroundcolor);
+        //this.getListView().setDivider( null );
+        //this.getListView().setDividerHeight(0);
+        //this.getListView().setSelector(R.color.titlebackgroundcolor);
         fighterHandler = new Handler();
         fighterJson = null;
         progressDialog = null;
@@ -155,11 +155,6 @@ public class FighterListActivity extends ListActivity {
 				if (topText != null) {
 					topText.setText(fighter.getName());	
 				}
-				
-//				TextView weightText = (TextView)v.findViewById(R.id.fighter_weight);
-//				if (weightText != null) {
-//					weightText.setText(fighter.getWeight().equals("") ? "" : "(" + fighter.getWeight() + ")");	
-//				}
 				
 				TextView detailsText = (TextView)v.findViewById(R.id.fighter_nickname);
 				if (detailsText != null) {
