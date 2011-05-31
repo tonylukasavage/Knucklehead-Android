@@ -105,10 +105,10 @@ public class FighterListActivity extends ListActivity {
 						Toast.makeText(FighterListActivity.this, fighterJson.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(FighterListActivity.this, "There was an error processing your search. Try again.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(FighterListActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(FighterListActivity.this, "There was an exception processing your search. Try again.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(FighterListActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
 				Log.e("runnable", e.getMessage());
 			} finally {
 				progressDialog.dismiss();	

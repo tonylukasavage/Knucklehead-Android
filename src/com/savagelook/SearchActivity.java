@@ -145,10 +145,10 @@ public class SearchActivity extends Activity {
 						Toast.makeText(SearchActivity.this, searchJson.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(SearchActivity.this, "There was an error processing your search. Try again.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(SearchActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(SearchActivity.this, "There was an exception processing your search. Try again.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SearchActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
 				Log.e("runnable", e.getMessage());
 			} finally {	
 				progressDialog.dismiss();
