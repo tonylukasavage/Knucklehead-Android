@@ -56,7 +56,7 @@ public class SearchActivity extends Activity {
 			public void onClick(View v) {
 				searchUrl = constructSearchUrl();
 				if (searchUrl.equals("")) {
-					Toast toast = Toast.makeText(SearchActivity.this, "Give me search criteria first!", 3000);
+					Toast toast = Toast.makeText(SearchActivity.this, "Give me search criteria first!", Toast.LENGTH_SHORT);
 					toast.show();
 					return;
 				}
@@ -70,7 +70,8 @@ public class SearchActivity extends Activity {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							searchJson = JsonHelper.getJsonObjectFromUrl(searchUrl, 5000, 5000);
+							Knucklehead kd = (Knucklehead)getApplicationContext();
+							searchJson = JsonHelper.getJsonObjectFromUrl(searchUrl, kd.getConnectTimeout(), kd.getReadTimeout());
 						} catch (SocketTimeoutException e) {
 							searchJson = null;
 					    } catch (Exception e) {
@@ -141,13 +142,13 @@ public class SearchActivity extends Activity {
 							startActivity(i);
 						}
 					} else {
-						Toast.makeText(SearchActivity.this, searchJson.getString("info"), 3000).show();
+						Toast.makeText(SearchActivity.this, searchJson.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(SearchActivity.this, "There was an error processing your search. Try again.", 3000).show();
+					Toast.makeText(SearchActivity.this, "There was an error processing your search. Try again.", Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(SearchActivity.this, "There was an exception processing your search. Try again.", 3000).show();
+				Toast.makeText(SearchActivity.this, "There was an exception processing your search. Try again.", Toast.LENGTH_SHORT).show();
 				Log.e("runnable", e.getMessage());
 			} finally {	
 				progressDialog.dismiss();

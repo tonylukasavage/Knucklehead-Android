@@ -68,7 +68,8 @@ public class FighterListActivity extends ListActivity {
 					new Thread(new Runnable() {
 						public void run() {
 							try {
-								fighterJson = JsonHelper.getJsonObjectFromUrl(urlString, 5000, 5000);
+								Knucklehead kd = (Knucklehead)getApplicationContext();
+								fighterJson = JsonHelper.getJsonObjectFromUrl(urlString, kd.getConnectTimeout(), kd.getReadTimeout());
 							} catch (SocketTimeoutException e) {
 								fighterJson = null;
 						    } catch (Exception e) {
@@ -101,13 +102,13 @@ public class FighterListActivity extends ListActivity {
 							startActivity(i);
 						}
 					} else {
-						Toast.makeText(FighterListActivity.this, fighterJson.getString("info"), 3000).show();
+						Toast.makeText(FighterListActivity.this, fighterJson.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(FighterListActivity.this, "There was an error processing your search. Try again.", 3000).show();
+					Toast.makeText(FighterListActivity.this, "There was an error processing your search. Try again.", Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(FighterListActivity.this, "There was an exception processing your search. Try again.", 3000).show();
+				Toast.makeText(FighterListActivity.this, "There was an exception processing your search. Try again.", Toast.LENGTH_SHORT).show();
 				Log.e("runnable", e.getMessage());
 			} finally {
 				progressDialog.dismiss();	

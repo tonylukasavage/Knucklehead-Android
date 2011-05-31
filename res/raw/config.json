@@ -1,5 +1,5 @@
 {
 	"proxy":"http://savagelook.com/knucklehead/ff.php?",
 	"connectTimeout":"5000",
-	"readTimeout":"5000"
+	"readTimeout":"10000"
 }

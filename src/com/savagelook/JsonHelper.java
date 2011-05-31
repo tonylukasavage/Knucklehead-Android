@@ -55,6 +55,7 @@ public class JsonHelper {
 	private static String getStringFromUrl(String url, int connectTimeout, int readTimeout) throws MalformedURLException, JSONException, IOException {
 		URL urlObject = new URL(url);
 		HttpURLConnection urlConn = (HttpURLConnection)urlObject.openConnection();
+		String jsonString  = "";
 		
 		if (connectTimeout != 0) {
 			urlConn.setConnectTimeout(connectTimeout);
@@ -63,8 +64,11 @@ public class JsonHelper {
 			urlConn.setReadTimeout(readTimeout);
 		}
 		
-		String jsonString = getStringFromInputStream(urlConn.getInputStream());
-		urlConn.disconnect();
+		try {
+			jsonString = getStringFromInputStream(urlConn.getInputStream());
+		} finally {
+			urlConn.disconnect();
+		}
 		return jsonString;
 	}
 }
