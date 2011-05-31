@@ -4,19 +4,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class FighterProfileActivity extends Activity {
@@ -33,42 +39,38 @@ public class FighterProfileActivity extends Activity {
 	        imageView.setImageDrawable(createDrawableFromURL(json.getString("imagelink")));
 	        
 	        // set profile data
-	        LinearLayout profileView = (LinearLayout)findViewById(R.id.profile_view);
-	        JSONArray profile = json.getJSONArray("profile");
-	        for (int i = 0; i < profile.length(); i++ ) {
-		        	LinearLayout layout = new LinearLayout(this);
-		        	layout.setOrientation(LinearLayout.HORIZONTAL);
-		        	layout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		        	
-		        	if (i % 2 == 0) {
-		        		layout.setBackgroundColor(Color.rgb(50, 50, 50));
-		        	} else {
-		        		layout.setBackgroundColor(Color.rgb(30, 30, 30));	
-		        	}
-		        	
-		        	String key = profile.getJSONObject(i).getString("k");
-		        	String value = profile.getJSONObject(i).getString("v");
+	        TextView tvNickname = (TextView)findViewById(R.id.fighter_nickname1);
+	        TextView tvRecord = (TextView)findViewById(R.id.fighter_record_text);
+	        ListView listView = (ListView)findViewById(R.id.profile_listview);
+	        JSONArray profileJsonArray = json.getJSONArray("profile");
+	        ArrayList<KeyValuePair> pairs = new ArrayList<KeyValuePair>();        
+	        
+	        // set the name, nickname, and record
+	        for (int i = 0; i < profileJsonArray.length(); i++ ) {
+		        	JSONObject item = profileJsonArray.getJSONObject(i);
+		        	String key = item.getString("k");
+		        	String value = item.getString("v");
 		        	
 		        	if (key.toLowerCase().equals("name")) {
-			        	((TextView)findViewById(R.id.fighter_name1)).setText(value);	
-			        	continue;
+			        	((TextView)findViewById(R.id.fighter_name1)).setText(value);	    	
 		        	} else if (key.toLowerCase().equals("nick name")) {
-			        	((TextView)findViewById(R.id.fighter_nickname1)).setText("\"" + value + "\"");
-			        	continue;
+			        	tvNickname.setText("\"" + value + "\"");
+		        	} else if (key.toLowerCase().equals("record")) {
+		        		tvRecord.setText(value);
+		        	} else {
+			        	pairs.add(new KeyValuePair(key, value));
 		        	}
-		        	
-		        TextView label = new TextView(this);
-		        label.setText(key + ":");
-		        label.setWidth(130);
-		        label.setPadding(6, 0, 0, 0);
-		        layout.addView(label);
-		        
-		        TextView valueView = new TextView(this);
-		        valueView.setText(value);
-		        valueView.setPadding(0, 0, 6, 0);
-		        layout.addView(valueView);
-		        
-		        profileView.addView(layout);
+	        }
+	        
+	        // put the rest of the profile items in the list
+	        listView.setAdapter(new FighterProfileAdapter(this, R.layout.tab_profile_row, pairs)); 
+	        
+	        // remove elements from layout if they are blank
+	        if (tvNickname.getText().equals("")) {
+		        	tvNickname.setVisibility(View.GONE);
+	        }
+	        if (tvRecord.getText().equals("")) {
+		        	tvRecord.setVisibility(View.GONE);
 	        }
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -100,5 +102,35 @@ public class FighterProfileActivity extends Activity {
         intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
         startActivity( intent );
 	    	return false;
+    }
+    
+    private class FighterProfileAdapter extends ArrayAdapter<KeyValuePair> {
+	    	private ArrayList<KeyValuePair> pairs;
+	    	
+	    	public FighterProfileAdapter(Context context, int textViewResourceId, ArrayList<KeyValuePair> pairs) {
+		    	super(context, textViewResourceId, pairs);
+		    	this.pairs = pairs;
+	    	}
+	    	
+	    	@Override
+	    	public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	            v = vi.inflate(R.layout.tab_profile_row, null);	
+			}
+			
+			TextView label = (TextView)v.findViewById(R.id.label_text);
+			TextView valueView = (TextView)v.findViewById(R.id.value_text);
+	        label.setText(pairs.get(position).getKey());
+	        valueView.setText(pairs.get(position).getValue());
+			
+			return v;
+	    	}
+	    	
+	    	@Override
+	    	public boolean isEnabled(int position) {
+		    	return false;
+	    	}
     }
 }
