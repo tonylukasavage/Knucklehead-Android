@@ -68,6 +68,8 @@ public class FighterRecordActivity extends Activity {
 	    	@Override
 	    	public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
+			FightDetails fd = fightDetails.get(position);
+			
 			if (v == null) {
 				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	            v = vi.inflate(R.layout.listitem_fight, null);	
@@ -76,10 +78,18 @@ public class FighterRecordActivity extends Activity {
 			TextView eventName = (TextView)v.findViewById(R.id.fight_event_name);
 			TextView eventDate = (TextView)v.findViewById(R.id.fight_date);
 			TextView result = (TextView)v.findViewById(R.id.fight_result);
+			TextView opponent = (TextView)v.findViewById(R.id.fight_opponent);
+			TextView method = (TextView)v.findViewById(R.id.fight_method);
+			TextView round = (TextView)v.findViewById(R.id.fight_round);
+			TextView time = (TextView)v.findViewById(R.id.fight_time);
 			
 			
-	        eventName.setText(fightDetails.get(position).getEvent());
-	        eventDate.setText(fightDetails.get(position).getDate());
+	        eventName.setText(fd.getEvent());
+	        eventDate.setText(fd.getDate());
+	        opponent.setText(fd.getOpponent());
+	        method.setText("via " + fd.getMethod());
+	        round.setText("Rd. " + fd.getRound());
+	        time.setText(fd.getTime());
 	        
 	        String resString = fightDetails.get(position).getResult().toUpperCase();
 	        if (resString.equals("WIN")) {
