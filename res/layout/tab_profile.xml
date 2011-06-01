@@ -62,24 +62,6 @@
 		android:layout_height="8dip"
 		android:background="@drawable/profile_list_header"
 		/> 
-	<!--  
-	<TextView
-		android:text="Details"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="16dip"
-		android:textStyle="bold"
-		android:shadowColor="#222222"
-		android:shadowDx="1"
-		android:shadowDy="1"
-		android:shadowRadius="1.5"
-		android:background="@drawable/profile_list_header"
-		android:textColor="#dddddd"
-		android:paddingLeft="12dip"
-		android:paddingTop="4dip"
-		android:paddingBottom="4dip"
-		/>
-		-->
 	<ListView
 		android:id="@+id/profile_listview"
 		android:layout_width="fill_parent"

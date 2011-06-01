@@ -34,8 +34,9 @@ public final class R {
         public static final int icon=0x7f020010;
         public static final int next=0x7f020011;
         public static final int profile_list_header=0x7f020012;
-        public static final int search_button=0x7f020013;
-        public static final int title_bg=0x7f020014;
+        public static final int profile_list_item=0x7f020013;
+        public static final int search_button=0x7f020014;
+        public static final int title_bg=0x7f020015;
     }
     public static final class id {
         public static final int fight_date=0x7f080006;

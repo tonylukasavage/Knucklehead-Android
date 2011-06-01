@@ -15,4 +15,8 @@
 	    android:endColor="#000000" 
 	    android:angle="270"
 	    /> 
+	<stroke
+		android:width="0.5dip"
+		android:color="#bbbbbb"
+		/>
 </shape>

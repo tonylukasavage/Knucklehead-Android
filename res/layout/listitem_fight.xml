@@ -22,6 +22,8 @@
 		    android:textColor="#000000"
 		    android:textSize="12dip"
 		    android:textStyle="normal"
+		    android:inputType="text"
+		    android:ellipsize="marquee"
 		    />
 		<TextView
 		    android:id="@+id/fight_date"
@@ -31,6 +33,7 @@
 		    android:textColor="#000000"
 		    android:textSize="12dip"
 		    android:textStyle="bold"
+		    android:paddingLeft="6dip"
 		    />
     </LinearLayout>
     <View
@@ -53,6 +56,7 @@
 		    android:layout_width="50dip"
 		    android:textColor="#ffffff"
 		    android:gravity="center"
+		    android:textStyle="normal"
 		    />
 		<LinearLayout
 			android:orientation="vertical"
