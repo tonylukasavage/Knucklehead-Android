@@ -98,7 +98,7 @@ public class SearchActivity extends Activity {
 					@Override
 					public void onCancel(DialogInterface arg0) {
 						FighterSearchTask.this.cancel(true);
-						finish();
+						//finish();
 					}
 				});
 	    	}

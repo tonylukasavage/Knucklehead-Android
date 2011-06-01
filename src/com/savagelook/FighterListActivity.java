@@ -88,7 +88,7 @@ public class FighterListActivity extends ListActivity {
 					@Override
 					public void onCancel(DialogInterface arg0) {
 						FighterDetailsTask.this.cancel(true);
-						finish();
+						//finish();
 					}
 				});
 	    	}
