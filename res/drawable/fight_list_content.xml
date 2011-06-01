@@ -5,14 +5,9 @@
 	    android:bottomLeftRadius="8dip"
 	    android:bottomRightRadius="8dip"
 	    />
-	    <!--  
-	<solid
-		android:color="#000000"
-		/>
-		-->
 	<gradient 
-	    android:startColor="#222222" 
-	    android:endColor="#000000" 
+	    android:startColor="#383838" 
+	    android:endColor="#222222" 
 	    android:angle="270"
 	    /> 
 	<stroke
