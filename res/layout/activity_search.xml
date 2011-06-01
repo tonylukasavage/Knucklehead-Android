@@ -28,29 +28,12 @@
 	    android:hint="Nickname"
 	    android:imeOptions="actionDone"
 	/>
-	<!-- 
-	<EditText 
-	    android:id="@+id/association"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:hint="Association/Team"
-	    android:imeOptions="actionDone"
-	/>
-	-->
 	<Spinner
 		android:id="@+id/weightclasses"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:prompt="@string/weight_prompt"
 	/>
-	<!--  
-	<Spinner
-		android:id="@+id/organizations"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:prompt="@string/association_prompt"
-	/>
-	-->
 	<Button
 		android:id="@+id/search"
 		android:layout_width="wrap_content"
