@@ -34,8 +34,8 @@
 				android:gravity="center"
 				android:textColor="#ffffff"
 				android:shadowColor="#888888"
-				  android:shadowDx="2.5"
-				  android:shadowDy="2"
+				  android:shadowDx="1.5"
+				  android:shadowDy="1.5"
 				  android:shadowRadius="1"
 				/>
 			<TextView

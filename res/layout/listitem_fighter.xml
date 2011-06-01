@@ -27,7 +27,7 @@
 				  android:shadowColor="#aaaaaa"
 				  android:shadowDx="1"
 				  android:shadowDy="1"
-				  android:shadowRadius="1.5"
+				  android:shadowRadius="1"
 				  >
 		</TextView>
 		<TextView android:id="@+id/fighter_nickname"
