@@ -80,6 +80,7 @@ public final class R {
         public static final int app_name=0x7f060000;
         public static final int association_prompt=0x7f060002;
         public static final int request_exception=0x7f060004;
+        public static final int search_empty=0x7f060005;
         public static final int too_busy=0x7f060003;
         public static final int weight_prompt=0x7f060001;
     }

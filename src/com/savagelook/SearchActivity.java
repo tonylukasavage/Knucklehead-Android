@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,21 +28,12 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class SearchActivity extends Activity {
-	private Handler searchHandler;
-	private JSONObject searchJson;
-	private String searchUrl;
-	private ProgressDialog progressDialog = null;
-	
+public class SearchActivity extends Activity {	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        
-        searchHandler = new Handler();
-        searchJson = null;
-        progressDialog = null;
         
         this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);
         //this.setupKeyValueSpinner(R.id.organizations, R.raw.organizations);  
@@ -54,33 +47,13 @@ public class SearchActivity extends Activity {
         b.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				searchUrl = constructSearchUrl();
-				if (searchUrl.equals("")) {
-					Toast toast = Toast.makeText(SearchActivity.this, "Give me search criteria first!", Toast.LENGTH_SHORT);
+				String url = constructSearchUrl();
+				if (url.equals("")) {
+					Toast toast = Toast.makeText(SearchActivity.this, R.string.search_empty, Toast.LENGTH_SHORT);
 					toast.show();
-					return;
-				}
-
-				if (progressDialog == null) {
-					progressDialog = ProgressDialog.show(SearchActivity.this, "", "Searching for fighters...", true);
 				} else {
-					return;	
-				}
-				
-				new Thread(new Runnable() {
-					public void run() {
-						try {
-							Knucklehead kd = (Knucklehead)getApplicationContext();
-							searchJson = JsonHelper.getJsonObjectFromUrl(searchUrl, kd.getConnectTimeout(), kd.getReadTimeout());
-						} catch (SocketTimeoutException e) {
-							searchJson = null;
-					    } catch (Exception e) {
-							searchJson = null;
-						} 
-					    
-					    searchHandler.post(handleSearchJson);
-					}
-				}).start();
+					new FighterSearchTask().execute(url);
+				}		
 			}
 		});
     }
@@ -126,37 +99,6 @@ public class SearchActivity extends Activity {
 	    }
     }
     
-    private Runnable handleSearchJson = new Runnable() {
-		@Override
-		public void run() {
-			try {
-				if (searchJson != null) {
-					if (searchJson.getBoolean("success")) {
-						if (searchJson.getString("info").equals("list")) {
-							Intent i = new Intent(SearchActivity.this, FighterListActivity.class);
-							i.putExtra("json", searchJson.getString("data").toString());
-							startActivity(i);	
-						} else {
-							Intent i = new Intent(SearchActivity.this, FighterTabActivity.class);
-							i.putExtra("json", searchJson.getString("data").toString());
-							startActivity(i);
-						}
-					} else {
-						Toast.makeText(SearchActivity.this, searchJson.getString("info"), Toast.LENGTH_SHORT).show();
-					}
-				} else {
-					Toast.makeText(SearchActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
-				}
-			} catch (JSONException e) {
-				Toast.makeText(SearchActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
-				Log.e("runnable", e.getMessage());
-			} finally {	
-				progressDialog.dismiss();
-				progressDialog = null;
-			}
-		}
-    };
-    
     private void setupKeyValueSpinner(int spinnerId, int jsonId) {
 	    	Spinner s = (Spinner)findViewById(spinnerId);
         ArrayAdapter<KeyValuePair> adapter = new ArrayAdapter<KeyValuePair>(this, android.R.layout.simple_spinner_item);
@@ -173,7 +115,78 @@ public class SearchActivity extends Activity {
 	        	// do something
         }
     }
+    
+    private class FighterSearchTask extends AsyncTask<String, Void, JSONObject> {
+	    	private ProgressDialog mProgressDialog = null;
+	
+	    	@Override
+	    	protected JSONObject doInBackground(String... searchUrls) {
+	    		String url = searchUrls[0];
+	    		JSONObject json = null;
+	    		
+	    		try {
+				Knucklehead kd = (Knucklehead)getApplicationContext();
+				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
+			} catch (SocketTimeoutException e) {
+				// handle timeout exceptions
+				json = null;
+		    } catch (Exception e) {
+			    	json = null;
+			}
+		    
+		    return json;
+	    	}
+	    	
+	    	@Override 
+	    	protected void onPreExecute() {
+	    		mProgressDialog = ProgressDialog.show(
+	    			SearchActivity.this, 
+	    			"", 
+	    			"Searching for fighters...", 
+	    			true,
+	    			true,
+	    			new DialogInterface.OnCancelListener() {	
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						FighterSearchTask.this.cancel(true);
+						finish();
+					}
+				});
+	    	}
+	    	
+	    	@Override
+	    	protected void onPostExecute(JSONObject json) {
+	    		try {
+				if (json != null) {
+					if (json.getBoolean("success")) {
+						if (json.getString("info").equals("list")) {
+							Intent i = new Intent(SearchActivity.this, FighterListActivity.class);
+							i.putExtra("json", json.getString("data").toString());
+							startActivity(i);	
+						} else {
+							Intent i = new Intent(SearchActivity.this, FighterTabActivity.class);
+							i.putExtra("json", json.getString("data").toString());
+							startActivity(i);
+						}
+					} else {
+						Toast.makeText(SearchActivity.this, json.getString("info"), Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(SearchActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
+				}
+			} catch (JSONException e) {
+				Toast.makeText(SearchActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
+				Log.e("runnable", e.getMessage());
+			} finally {	
+				mProgressDialog.dismiss();
+				mProgressDialog = null;
+			}
+	    	}
+
+    }
 }
+
+
 
 class MyOnEditorActionListener implements OnEditorActionListener {
 	@Override

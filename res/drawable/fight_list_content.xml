@@ -6,8 +6,9 @@
 	    android:bottomRightRadius="8dip"
 	    />
 	<gradient 
-	    android:startColor="#383838" 
-	    android:endColor="#222222" 
+	    android:startColor="#282828" 
+	    android:centerColor="#121212"
+	    android:endColor="#282828" 
 	    android:angle="270"
 	    /> 
 	<stroke

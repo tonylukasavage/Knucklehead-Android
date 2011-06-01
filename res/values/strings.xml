@@ -5,4 +5,5 @@
     <string name="association_prompt">MMA Association</string>
     <string name="too_busy">We\'re too busy. Try again in a second.</string>
     <string name="request_exception">There was an error processing your request. Try again.</string>
+    <string name="search_empty">Give me some search criteria first!</string>
 </resources>
