@@ -96,7 +96,9 @@ public class FighterRecordActivity extends Activity {
 		        	result.setTextColor(Color.GREEN);
 	        } else if (resString.equals("LOSS")) {
 		        	result.setTextColor(Color.RED);
-	        } 
+	        } else {
+		        	result.setTextColor(Color.WHITE);
+	        }
 	        result.setText(resString);
 			
 			return v;
