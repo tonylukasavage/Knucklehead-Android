@@ -10,9 +10,10 @@ import org.json.JSONObject;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class FighterListActivity extends ListActivity {
-	private Handler fighterHandler;
-	private String urlString;
-	private JSONObject fighterJson;
-	private ProgressDialog progressDialog;
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        fighterHandler = new Handler();
-        fighterJson = null;
-        progressDialog = null;
  
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
@@ -54,29 +46,8 @@ public class FighterListActivity extends ListActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					Fighter fighter = fighters.get(position);
-					urlString = constructFighterUrl(fighter.getLink());
-					
-					if (progressDialog == null) {
-						progressDialog = ProgressDialog.show(FighterListActivity.this, "", "Loading fighter profile...", true);
-					} else {
-						return;	
-					}
-					
-					// loading animation
-					new Thread(new Runnable() {
-						public void run() {
-							try {
-								Knucklehead kd = (Knucklehead)getApplicationContext();
-								fighterJson = JsonHelper.getJsonObjectFromUrl(urlString, kd.getConnectTimeout(), kd.getReadTimeout());
-							} catch (SocketTimeoutException e) {
-								fighterJson = null;
-						    } catch (Exception e) {
-								fighterJson = null;
-							} 
-						    
-						    fighterHandler.post(handleFighterJson);
-						}
-					}).start();
+					String url = constructFighterUrl(fighter.getLink());
+					new FighterDetailsTask().execute(url);
 				}
 			});
 		} catch (Exception e) {
@@ -84,23 +55,60 @@ public class FighterListActivity extends ListActivity {
 		}
     }
     
-    private Runnable handleFighterJson = new Runnable() {
-		@Override
-		public void run() {
-			try {
-				if (fighterJson != null) {
-					if (fighterJson.getBoolean("success")) {
-						if (fighterJson.getString("info").equals("list")) {
+    private class FighterDetailsTask extends AsyncTask<String, Void, JSONObject> {
+	    	private ProgressDialog mProgressDialog = null;
+	
+	    	@Override
+	    	protected JSONObject doInBackground(String... searchUrls) {
+	    		String url = searchUrls[0];
+	    		JSONObject json = null;
+	    		
+	    		try {
+				Knucklehead kd = (Knucklehead)getApplicationContext();
+				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
+			} catch (SocketTimeoutException e) {
+				// TODO use shorter timeouts with under-the-hood retries
+				json = null;
+		    } catch (Exception e) {
+			    	json = null;
+			}
+		    
+		    return json;
+	    	}
+	    	
+	    	@Override 
+	    	protected void onPreExecute() {
+	    		mProgressDialog = ProgressDialog.show(
+	    			FighterListActivity.this, 
+	    			"", 
+	    			"Loading fighter details...", 
+	    			true,
+	    			true,
+	    			new DialogInterface.OnCancelListener() {	
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						FighterDetailsTask.this.cancel(true);
+						finish();
+					}
+				});
+	    	}
+	    	
+	    	@Override
+	    	protected void onPostExecute(JSONObject json) {
+	    		try {
+				if (json != null) {
+					if (json.getBoolean("success")) {
+						if (json.getString("info").equals("list")) {
 							Intent i = new Intent(FighterListActivity.this, FighterListActivity.class);
-							i.putExtra("json", fighterJson.getString("data").toString());
+							i.putExtra("json", json.getString("data").toString());
 							startActivity(i);	
 						} else {
 							Intent i = new Intent(FighterListActivity.this, FighterTabActivity.class);
-							i.putExtra("json", fighterJson.getString("data").toString());
+							i.putExtra("json", json.getString("data").toString());
 							startActivity(i);
 						}
 					} else {
-						Toast.makeText(FighterListActivity.this, fighterJson.getString("info"), Toast.LENGTH_SHORT).show();
+						Toast.makeText(FighterListActivity.this, json.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					Toast.makeText(FighterListActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
@@ -108,12 +116,12 @@ public class FighterListActivity extends ListActivity {
 			} catch (JSONException e) {
 				Toast.makeText(FighterListActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
 				Log.e("runnable", e.getMessage());
-			} finally {
-				progressDialog.dismiss();	
-				progressDialog = null;
+			} finally {	
+				mProgressDialog.dismiss();
+				mProgressDialog = null;
 			}
-		}
-    };
+	    	}
+	}
     
     private String qfix(String value) {
 	    	return java.net.URLEncoder.encode(value.trim());

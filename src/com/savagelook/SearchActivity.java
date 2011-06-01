@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -66,56 +65,6 @@ public class SearchActivity extends Activity {
 	    	return false;
     }
     
-    private String qfix(String value) {
-	    	return java.net.URLEncoder.encode(value.trim());
-    }
-    
-    private String constructSearchUrl() {
-	    	String url = ((Knucklehead)getApplicationContext()).getProxy();
-	    	String params = "";
-	    	
-	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());
-	    String lastname = qfix(((EditText)findViewById(R.id.lastname)).getText().toString());
-	    String nickname = qfix(((EditText)findViewById(R.id.nickname)).getText().toString());
-	    String weightclass = qfix(((KeyValuePair)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
-	    
-	    if (!firstname.equals("")) {
-		    	params += "firstname=" + firstname + "&";
-	    }
-	    if (!lastname.equals("")) {
-		    	params += "lastname=" + lastname + "&";
-	    }
-	    if (!nickname.equals("")) {
-		    	params += "nickname=" + nickname + "&";
-	    }
-	    if (!weightclass.equals("")) {
-		    params += "weight=" + weightclass;
-	    }
-	    	
-	    if (params.equals("")) {
-		    	return "";
-	    } else {
-			return url + params;
-	    }
-    }
-    
-    private void setupKeyValueSpinner(int spinnerId, int jsonId) {
-	    	Spinner s = (Spinner)findViewById(spinnerId);
-        ArrayAdapter<KeyValuePair> adapter = new ArrayAdapter<KeyValuePair>(this, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);	
-        
-        try {
-	        	JSONArray entries = JsonHelper.getJsonArrayFromResource(this, jsonId);
-		    for (int i = 0; i < entries.length(); i++) {
-			    	JSONObject pair = entries.getJSONObject(i);
-			    adapter.add(new KeyValuePair(pair.getString("k"), pair.getString("v")));
-		    }
-        } catch (Exception e) {
-	        	// do something
-        }
-    }
-    
     private class FighterSearchTask extends AsyncTask<String, Void, JSONObject> {
 	    	private ProgressDialog mProgressDialog = null;
 	
@@ -128,7 +77,7 @@ public class SearchActivity extends Activity {
 				Knucklehead kd = (Knucklehead)getApplicationContext();
 				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
 			} catch (SocketTimeoutException e) {
-				// handle timeout exceptions
+				// TODO use shorter timeouts with under-the-hood retries
 				json = null;
 		    } catch (Exception e) {
 			    	json = null;
@@ -182,11 +131,59 @@ public class SearchActivity extends Activity {
 				mProgressDialog = null;
 			}
 	    	}
-
+	
+	}
+    
+    private String qfix(String value) {
+	    	return java.net.URLEncoder.encode(value.trim());
+    }
+    
+    private String constructSearchUrl() {
+	    	String url = ((Knucklehead)getApplicationContext()).getProxy();
+	    	String params = "";
+	    	
+	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());
+	    String lastname = qfix(((EditText)findViewById(R.id.lastname)).getText().toString());
+	    String nickname = qfix(((EditText)findViewById(R.id.nickname)).getText().toString());
+	    String weightclass = qfix(((KeyValuePair)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
+	    
+	    if (!firstname.equals("")) {
+		    	params += "firstname=" + firstname + "&";
+	    }
+	    if (!lastname.equals("")) {
+		    	params += "lastname=" + lastname + "&";
+	    }
+	    if (!nickname.equals("")) {
+		    	params += "nickname=" + nickname + "&";
+	    }
+	    if (!weightclass.equals("")) {
+		    params += "weight=" + weightclass;
+	    }
+	    	
+	    if (params.equals("")) {
+		    	return "";
+	    } else {
+			return url + params;
+	    }
+    }
+    
+    private void setupKeyValueSpinner(int spinnerId, int jsonId) {
+	    	Spinner s = (Spinner)findViewById(spinnerId);
+        ArrayAdapter<KeyValuePair> adapter = new ArrayAdapter<KeyValuePair>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(adapter);	
+        
+        try {
+	        	JSONArray entries = JsonHelper.getJsonArrayFromResource(this, jsonId);
+		    for (int i = 0; i < entries.length(); i++) {
+			    	JSONObject pair = entries.getJSONObject(i);
+			    adapter.add(new KeyValuePair(pair.getString("k"), pair.getString("v")));
+		    }
+        } catch (Exception e) {
+	        	// do something
+        }
     }
 }
-
-
 
 class MyOnEditorActionListener implements OnEditorActionListener {
 	@Override
