@@ -50,7 +50,7 @@
 				android:id="@+id/fighter_record_text"
 				android:textSize="24dip"
 				android:textStyle="bold"
-				android:textColor="#880000"
+				android:textColor="#ffffff"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center"

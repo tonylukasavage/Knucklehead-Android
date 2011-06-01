@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +57,13 @@ public class FighterProfileActivity extends Activity {
 		        	} else if (key.toLowerCase().equals("nick name")) {
 			        	tvNickname.setText("\"" + value + "\"");
 		        	} else if (key.toLowerCase().equals("record")) {
-		        		tvRecord.setText(value);
+		        		Pattern pattern = Pattern.compile("(\\d+)\\-(\\d+)\\-*(\\d*)");
+		        		Matcher matcher = pattern.matcher(value);
+		        		if (matcher.matches()) {
+		        			tvRecord.setText(Html.fromHtml("<font color='#00ff00'>" + matcher.group(1) + "</font> - <font color='#ff0000'>" + matcher.group(2) + "</font> - " + matcher.group(3)));
+		        		} else {
+			        		tvRecord.setText(value);
+		        		}
 		        	} else {
 			        	pairs.add(new KeyValuePair(key, value));
 		        	}
