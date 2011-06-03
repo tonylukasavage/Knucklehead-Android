@@ -20,11 +20,11 @@
 			android:label="Select a fighter for details" android:screenOrientation="portrait"/>
 		<activity android:name=".FighterTabActivity" android:theme="@android:style/Theme.NoTitleBar"
 			android:screenOrientation="portrait"/>
-		<activity android:name=".FighterProfileActivity" android:theme="@android:style/Theme.NoTitleBar"
+		<activity android:name=".FighterProfileActivity" 
 			android:screenOrientation="portrait"/>
-		<activity android:name=".FighterRecordActivity" android:theme="@android:style/Theme.NoTitleBar"
+		<activity android:name=".FighterRecordActivity" 
 			android:screenOrientation="portrait"/>
-		<activity android:name=".FighterGalleryActivity" android:theme="@android:style/Theme.NoTitleBar"
+		<activity android:name=".FighterGalleryActivity" 
 			android:screenOrientation="portrait"/>
     </application>
 </manifest>

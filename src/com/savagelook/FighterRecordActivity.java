@@ -24,10 +24,24 @@ public class FighterRecordActivity extends Activity {
         setContentView(R.layout.tab_fights);
         
         try {
+	        	// get json from Intent
+	        	String jsonString = getIntent().getStringExtra("json");
+	        JSONObject json = new JSONObject(jsonString);
+        	
+	        	// set fighter name
+//	        	JSONArray profileJsonArray = json.getJSONArray("profile");
+//	        	for (int i = 0; i < profileJsonArray.length(); i++ ) {
+//		        	JSONObject item = profileJsonArray.getJSONObject(i);
+//		        	String key = item.getString("k");
+//		        	String value = item.getString("v");
+//		        	
+//		        	if (key.toLowerCase().equals("name")) {
+//			        	((TextView)findViewById(R.id.fighter_name_vs)).setText(value + " vs.");	    	
+//		        	}
+//	        	}       	
+        	
 		    // set fight list
 	        ListView fightList = (ListView)findViewById(R.id.fight_list);
-	        String jsonString = getIntent().getStringExtra("json");
-	        JSONObject json = new JSONObject(jsonString);
 	        JSONArray fights = json.getJSONArray("fights");
 	        
 	        if (fights.length() > 0) {
