@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,13 +33,10 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         
-        this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);
-        //this.setupKeyValueSpinner(R.id.organizations, R.raw.organizations);  
-        
+        this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new MyOnEditorActionListener());
-        //((EditText)findViewById(R.id.association)).setOnEditorActionListener(new MyOnEditorActionListener());
         
         Button b = (Button)findViewById(R.id.search);
         b.setOnClickListener(new OnClickListener() {
@@ -98,7 +94,6 @@ public class SearchActivity extends Activity {
 					@Override
 					public void onCancel(DialogInterface arg0) {
 						FighterSearchTask.this.cancel(true);
-						//finish();
 					}
 				});
 	    	}

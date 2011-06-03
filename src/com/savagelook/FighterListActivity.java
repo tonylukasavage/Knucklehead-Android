@@ -14,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class FighterListActivity extends ListActivity {
 				}
 			});
 		} catch (Exception e) {
-			Log.e("FighterListActivity.onCreate()", e.getMessage());
+			// do something
 		}
     }
     
@@ -88,34 +87,27 @@ public class FighterListActivity extends ListActivity {
 					@Override
 					public void onCancel(DialogInterface arg0) {
 						FighterDetailsTask.this.cancel(true);
-						//finish();
 					}
 				});
 	    	}
 	    	
 	    	@Override
 	    	protected void onPostExecute(JSONObject json) {
+	    		Context context = FighterListActivity.this; 
 	    		try {
 				if (json != null) {
 					if (json.getBoolean("success")) {
-						if (json.getString("info").equals("list")) {
-							Intent i = new Intent(FighterListActivity.this, FighterListActivity.class);
-							i.putExtra("json", json.getString("data").toString());
-							startActivity(i);	
-						} else {
-							Intent i = new Intent(FighterListActivity.this, FighterTabActivity.class);
-							i.putExtra("json", json.getString("data").toString());
-							startActivity(i);
-						}
+						Intent intent = new Intent(context, FighterTabActivity.class);
+						intent.putExtra("json", json.getString("data").toString());
+						startActivity(intent);
 					} else {
-						Toast.makeText(FighterListActivity.this, json.getString("info"), Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, json.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(FighterListActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.too_busy, Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(FighterListActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
-				Log.e("runnable", e.getMessage());
+				Toast.makeText(context, R.string.request_exception, Toast.LENGTH_SHORT).show();
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
