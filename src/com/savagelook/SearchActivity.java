@@ -105,27 +105,22 @@ public class SearchActivity extends Activity {
 	    	
 	    	@Override
 	    	protected void onPostExecute(JSONObject json) {
+	    		Context context = SearchActivity.this;  		
 	    		try {
 				if (json != null) {
 					if (json.getBoolean("success")) {
-						if (json.getString("info").equals("list")) {
-							Intent i = new Intent(SearchActivity.this, FighterListActivity.class);
-							i.putExtra("json", json.getString("data").toString());
-							startActivity(i);	
-						} else {
-							Intent i = new Intent(SearchActivity.this, FighterTabActivity.class);
-							i.putExtra("json", json.getString("data").toString());
-							startActivity(i);
-						}
+						Class<?> intentClass = json.getString("info").equals("list") ? FighterListActivity.class : FighterTabActivity.class;
+						Intent intent = new Intent(context, intentClass);
+						intent.putExtra("json", json.getString("data").toString());
+						startActivity(intent);
 					} else {
-						Toast.makeText(SearchActivity.this, json.getString("info"), Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, json.getString("info"), Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(SearchActivity.this, R.string.too_busy, Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.too_busy, Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(SearchActivity.this, R.string.request_exception, Toast.LENGTH_SHORT).show();
-				Log.e("runnable", e.getMessage());
+				Toast.makeText(context, R.string.request_exception, Toast.LENGTH_SHORT).show();
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
