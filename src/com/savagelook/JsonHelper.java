@@ -1,6 +1,5 @@
 package com.savagelook;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,11 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.http.util.ByteArrayBuffer;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 
 public class JsonHelper {
 	public static JSONArray getJsonArrayFromResource(Context context, int resourceId) throws JSONException, IOException {

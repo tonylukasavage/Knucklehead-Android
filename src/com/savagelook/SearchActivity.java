@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +25,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 public class SearchActivity extends Activity {	
     /** Called when the activity is first created. */
@@ -63,25 +63,36 @@ public class SearchActivity extends Activity {
     private class FighterSearchTask extends AsyncTask<String, Void, JSONObject> {
 	    	private ProgressDialog mProgressDialog = null;
 	
+	    	private JSONObject queryFighters(String url, int connectTimeout, int readTimeout, int retries) {
+	    		JSONObject json = new JSONObject();
+	    		String tag = "queryFighters";
+	    		
+	    		try {
+			    	try {
+			    		json.put("success", false);
+			    		json = JsonHelper.getJsonObjectFromUrl(url, connectTimeout, readTimeout);
+			    	} catch (SocketTimeoutException e) {
+			    		if (retries-- > 0) {
+				    		json = queryFighters(url, connectTimeout, readTimeout, retries);	
+			    		} else {
+				    		json.put("info", getString(R.string.too_busy));
+			    		}
+			    	} catch (Exception e) {
+			    		Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+			    		json.put("info", getString(R.string.oops));	
+			    	} 
+	    		} catch (JSONException e) {
+	    			return null;
+	    		}
+		    	
+		    	return json;
+	    	}
+	    	
 	    	@Override
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
-	    		JSONObject json = null;
 	    		Knucklehead kd = (Knucklehead)getApplicationContext();
-	    		int retries = kd.getRetries();
-	    		
-	    		try {
-				
-				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
-			} catch (SocketTimeoutException e) {
-				retries--;
-				// TODO use shorter timeouts with under-the-hood retries
-				json = null;
-		    } catch (Exception e) {
-			    	json = null;
-			}
-		    
-		    return json;
+	    		return queryFighters(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries());
 	    	}
 	    	
 	    	@Override 
@@ -102,7 +113,9 @@ public class SearchActivity extends Activity {
 	    	
 	    	@Override
 	    	protected void onPostExecute(JSONObject json) {
-	    		Context context = SearchActivity.this;  		
+	    		Context context = SearchActivity.this; 
+	    		String tag = "FighterSearchTask.onPostExecute()";
+	    		
 	    		try {
 				if (json != null) {
 					if (json.getBoolean("success")) {
@@ -114,10 +127,12 @@ public class SearchActivity extends Activity {
 						Toaster.toast(context, json.getString("info"));
 					}
 				} else {
-					Toaster.toast(context, R.string.too_busy);
+					Log.e(tag, "JSON was null, there was a problem in queryFighters() constructing it.");
+					Toaster.toast(context, R.string.oops);
 				}
 			} catch (JSONException e) {
-				Toaster.toast(context, R.string.request_exception);
+				Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+				Toaster.toast(context, R.string.oops);
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;

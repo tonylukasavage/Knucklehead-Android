@@ -107,7 +107,7 @@ public class FighterListActivity extends ListActivity {
 					Toast.makeText(context, R.string.too_busy, Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
-				Toast.makeText(context, R.string.request_exception, Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.oops, Toast.LENGTH_SHORT).show();
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
