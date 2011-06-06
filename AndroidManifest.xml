@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity android:name=".FighterListActivity" android:theme="@style/customTheme" 
+		<activity android:name=".FighterListActivity" android:theme="@style/customTheme"
 			android:label="Select a fighter for details" android:screenOrientation="portrait"/>
 		<activity android:name=".FighterTabActivity" android:theme="@android:style/Theme.NoTitleBar"
 			android:screenOrientation="portrait"/>

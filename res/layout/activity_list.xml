@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/carbon_fibre_repeat"
     >
     <!--  
     <TextView
@@ -16,12 +16,9 @@
 	    />
 	    -->
 	<ListView
-		android:id="@+id/fight_list"
-		android:layout_height="fill_parent"
-		android:layout_width="fill_parent"
-		android:divider="@android:color/transparent"
-		android:dividerHeight="6.0dip"
-		android:paddingTop="6dip"	
+		android:id="@android:id/list"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
 		>
 	</ListView>
 </LinearLayout>

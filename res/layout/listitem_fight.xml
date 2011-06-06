@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"  
+    android:paddingLeft="3dip"
+    android:paddingRight="3dip"
     android:orientation="vertical"
     >
     <LinearLayout
@@ -72,6 +74,8 @@
 				android:layout_width="wrap_content"
 				android:textStyle="bold"
 				android:textSize="14dip"
+				android:inputType="text"
+			    android:ellipsize="marquee"
 				/>
 			<TextView
 				android:id="@+id/fight_method"
@@ -79,6 +83,8 @@
 				android:layout_width="wrap_content"
 				android:textStyle="italic"
 				android:textSize="10dip"
+				android:inputType="text"
+			    android:ellipsize="marquee"
 				/>
 		</LinearLayout>
 		<LinearLayout

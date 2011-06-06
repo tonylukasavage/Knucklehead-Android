@@ -17,9 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,9 +30,13 @@ public class FighterListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list);
         
         ListView list = getListView();
-        list.setBackgroundColor(Color.BLACK);
+        //list.setCacheColorHint(Color.rgb(0,0,0));
+        //list.setBackgroundColor(Color.rgb(0,0,0));
+        
+        //list.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
  
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
