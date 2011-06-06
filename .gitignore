@@ -10,10 +10,8 @@ Thumbs.db
 Desktop.ini
 *~
 *.apk
-bin/*
-!bin/.gitignore
-gen/*
-!gen/.gitignore
+bin
+gen
 local.properties
 *.jar
 .classpath
