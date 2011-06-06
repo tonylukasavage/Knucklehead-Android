@@ -1,8 +1,10 @@
 package com.savagelook;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +13,7 @@ import org.apache.http.util.ByteArrayBuffer;
 import org.json.*;
 
 import android.content.Context;
+import android.util.Log;
 
 public class JsonHelper {
 	public static JSONArray getJsonArrayFromResource(Context context, int resourceId) throws JSONException, IOException {
@@ -43,13 +46,13 @@ public class JsonHelper {
 	}
 	
 	static private String getStringFromInputStream(InputStream is) throws IOException {	
-		BufferedInputStream bis = new BufferedInputStream(is);
-		ByteArrayBuffer buffer = new ByteArrayBuffer(bis.available());
-		int current = 0;
-		while ((current = bis.read()) != -1) {
-			buffer.append((byte)current);	
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
+		String line = "";
+		while((line = br.readLine()) != null) {
+			sb.append(line);
 		}
-		return new String(buffer.toByteArray());
+		return sb.toString();
 	}
 	
 	private static String getStringFromUrl(String url, int connectTimeout, int readTimeout) throws MalformedURLException, JSONException, IOException {

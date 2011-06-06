@@ -13,12 +13,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -47,18 +44,7 @@ public class SearchActivity extends Activity {
 			public void onClick(View v) {
 				String url = constructSearchUrl();
 				if (url.equals("")) {
-					LayoutInflater inflater = getLayoutInflater();
-					View layout = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.kh_toast));
-					TextView text = (TextView)layout.findViewById(R.id.text);
-					text.setText(R.string.search_empty);
-					Toast toast = new Toast(getApplicationContext());
-					//toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-					toast.setDuration(Toast.LENGTH_SHORT);
-					toast.setView(layout);
-					toast.show();
-					
-					//Toast toast = Toast.makeText(SearchActivity.this, R.string.search_empty, Toast.LENGTH_SHORT);
-					//toast.show();
+					Toaster.toast(getApplicationContext(), R.string.search_empty);
 				} else {
 					new FighterSearchTask().execute(url);
 				}		
@@ -125,13 +111,13 @@ public class SearchActivity extends Activity {
 						intent.putExtra("json", json.getString("data").toString());
 						startActivity(intent);
 					} else {
-						Toast.makeText(context, json.getString("info"), Toast.LENGTH_SHORT).show();
+						Toaster.toast(context, json.getString("info"));
 					}
 				} else {
-					Toast.makeText(context, R.string.too_busy, Toast.LENGTH_SHORT).show();
+					Toaster.toast(context, R.string.too_busy);
 				}
 			} catch (JSONException e) {
-				Toast.makeText(context, R.string.request_exception, Toast.LENGTH_SHORT).show();
+				Toaster.toast(context, R.string.request_exception);
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
