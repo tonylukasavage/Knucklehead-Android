@@ -68,11 +68,14 @@ public class SearchActivity extends Activity {
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
 	    		JSONObject json = null;
+	    		Knucklehead kd = (Knucklehead)getApplicationContext();
+	    		int retries = kd.getRetries();
 	    		
 	    		try {
-				Knucklehead kd = (Knucklehead)getApplicationContext();
+				
 				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
 			} catch (SocketTimeoutException e) {
+				retries--;
 				// TODO use shorter timeouts with under-the-hood retries
 				json = null;
 		    } catch (Exception e) {

@@ -11,6 +11,7 @@ public class Knucklehead extends Application {
 	private String proxy;
 	private int connectTimeout;
 	private int readTimeout;
+	private int retries;
 	
 	@Override
 	public void onCreate() {
@@ -19,6 +20,7 @@ public class Knucklehead extends Application {
 			this.proxy = configJson.getString("proxy");
 			this.connectTimeout = Integer.parseInt(configJson.getString("connectTimeout"));
 			this.readTimeout = Integer.parseInt(configJson.getString("readTimeout"));
+			this.retries = Integer.parseInt(configJson.getString("retries"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,5 +53,13 @@ public class Knucklehead extends Application {
 
 	public void setReadTimeout(int readTimeout) {
 		this.readTimeout = readTimeout;
+	}
+	
+	public int getRetries() {
+		return retries;
+	}
+
+	public void setRetries(int retries) {
+		this.retries = retries;
 	}
 }
