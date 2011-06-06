@@ -1,7 +1,5 @@
 package com.savagelook;
 
-import java.net.SocketTimeoutException;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -60,39 +57,14 @@ public class SearchActivity extends Activity {
 	    	return false;
     }
     
-    private class FighterSearchTask extends AsyncTask<String, Void, JSONObject> {
+    private class FighterSearchTask extends JsonAsyncTask {
 	    	private ProgressDialog mProgressDialog = null;
-	
-	    	private JSONObject queryFighters(String url, int connectTimeout, int readTimeout, int retries) {
-	    		JSONObject json = new JSONObject();
-	    		String tag = "queryFighters";
-	    		
-	    		try {
-			    	try {
-			    		json.put("success", false);
-			    		json = JsonHelper.getJsonObjectFromUrl(url, connectTimeout, readTimeout);
-			    	} catch (SocketTimeoutException e) {
-			    		if (retries-- > 0) {
-				    		json = queryFighters(url, connectTimeout, readTimeout, retries);	
-			    		} else {
-				    		json.put("info", getString(R.string.too_busy));
-			    		}
-			    	} catch (Exception e) {
-			    		Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
-			    		json.put("info", getString(R.string.oops));	
-			    	} 
-	    		} catch (JSONException e) {
-	    			return null;
-	    		}
-		    	
-		    	return json;
-	    	}
 	    	
 	    	@Override
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
 	    		Knucklehead kd = (Knucklehead)getApplicationContext();
-	    		return queryFighters(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries());
+	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
 	    	}
 	    	
 	    	@Override 

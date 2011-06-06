@@ -1,6 +1,5 @@
 package com.savagelook;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -12,8 +11,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +22,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FighterListActivity extends ListActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        ListView list = getListView();
+        list.setBackgroundColor(Color.BLACK);
  
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
@@ -40,7 +42,6 @@ public class FighterListActivity extends ListActivity {
 		    }
 			this.setListAdapter(new FighterAdapter(this, R.layout.listitem_fighter, fighters));
 			
-			ListView list = getListView();
 			list.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -54,25 +55,14 @@ public class FighterListActivity extends ListActivity {
 		}
     }
     
-    private class FighterDetailsTask extends AsyncTask<String, Void, JSONObject> {
+    private class FighterDetailsTask extends JsonAsyncTask {
 	    	private ProgressDialog mProgressDialog = null;
 	
 	    	@Override
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
-	    		JSONObject json = null;
-	    		
-	    		try {
-				Knucklehead kd = (Knucklehead)getApplicationContext();
-				json = JsonHelper.getJsonObjectFromUrl(url, kd.getConnectTimeout(), kd.getReadTimeout());
-			} catch (SocketTimeoutException e) {
-				// TODO use shorter timeouts with under-the-hood retries
-				json = null;
-		    } catch (Exception e) {
-			    	json = null;
-			}
-		    
-		    return json;
+	    		Knucklehead kd = (Knucklehead)getApplicationContext();
+	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
 	    	}
 	    	
 	    	@Override 
@@ -94,6 +84,8 @@ public class FighterListActivity extends ListActivity {
 	    	@Override
 	    	protected void onPostExecute(JSONObject json) {
 	    		Context context = FighterListActivity.this; 
+	    		String tag = "FighterDetailsTask.onPostExecute()";
+	    		
 	    		try {
 				if (json != null) {
 					if (json.getBoolean("success")) {
@@ -101,13 +93,15 @@ public class FighterListActivity extends ListActivity {
 						intent.putExtra("json", json.getString("data").toString());
 						startActivity(intent);
 					} else {
-						Toast.makeText(context, json.getString("info"), Toast.LENGTH_SHORT).show();
+						Toaster.toast(context, json.getString("info"));
 					}
 				} else {
-					Toast.makeText(context, R.string.too_busy, Toast.LENGTH_SHORT).show();
+					Log.e(tag, "JSON was null, there was a problem in queryFighters() constructing it.");
+					Toaster.toast(context, R.string.oops);
 				}
 			} catch (JSONException e) {
-				Toast.makeText(context, R.string.oops, Toast.LENGTH_SHORT).show();
+				Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+				Toaster.toast(context, R.string.oops);
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
