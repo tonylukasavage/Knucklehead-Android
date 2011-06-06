@@ -12,6 +12,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:hint="First Name"
+	    android:inputType="text"
 	    android:imeOptions="actionDone"
 	/>
 	<EditText 
@@ -19,6 +20,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:hint="Last Name"
+	    android:inputType="text"
 	    android:imeOptions="actionDone"
 	/>
 	<EditText 
@@ -26,6 +28,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:hint="Nickname"
+	    android:inputType="text"
 	    android:imeOptions="actionDone"
 	/>
 	<Spinner
@@ -43,6 +46,7 @@
 		android:layout_marginTop="10dip"
 		android:text="Search"
 		android:textSize="28dip"
+		android:textColor="#eeeeee"
 		android:shadowColor="#F000"
 		android:shadowDx="2.0"
 		android:shadowDy="2.0"
