@@ -24,8 +24,12 @@ public abstract class JsonAsyncTask extends AsyncTask<String, Void, JSONObject> 
 			    		json.put("info", tooBusy);
 		    		}
 		    	} catch (Exception e) {
-		    		Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
-		    		json.put("info", oops);	
+		    		if (retries-- > 0) {
+		    			json = queryUrlForJson(url, connectTimeout, readTimeout, retries, tooBusy, oops);
+		    		} else {
+			    		Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+			    		json.put("info", oops);	
+		    		}
 		    	} 
 		} catch (JSONException e) {
 			return null;
