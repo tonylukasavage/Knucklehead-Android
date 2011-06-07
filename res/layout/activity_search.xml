@@ -7,6 +7,19 @@
     android:background="@drawable/carbon_fibre_repeat"
 	android:padding="40dip"
     >
+    <TextView
+	    android:text="Fighter Search"
+	    android:textColor="#eeeeee"
+	    android:shadowColor="#888888"
+	    android:shadowDx="1.0"
+	    android:shadowDy="1.0"
+	    android:shadowRadius="1.0"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:textSize="26dip"
+	    android:textStyle="bold"
+	    android:paddingBottom="6dip"
+    />
     <EditText 
 	    android:id="@+id/firstname"
 	    android:layout_width="fill_parent"
