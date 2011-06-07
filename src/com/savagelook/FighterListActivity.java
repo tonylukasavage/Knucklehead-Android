@@ -11,17 +11,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,13 +28,9 @@ public class FighterListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        
-        ListView list = getListView();
-        //list.setCacheColorHint(Color.rgb(0,0,0));
-        //list.setBackgroundColor(Color.rgb(0,0,0));
-        
-        //list.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
  
+	    // TODO make a better drawable for the list item backgrounds (selector)
+        
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
 			final ArrayList<Fighter> fighters = new ArrayList<Fighter>();
@@ -48,6 +41,7 @@ public class FighterListActivity extends ListActivity {
 		    }
 			this.setListAdapter(new FighterAdapter(this, R.layout.listitem_fighter, fighters));
 			
+			ListView list = getListView();
 			list.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
