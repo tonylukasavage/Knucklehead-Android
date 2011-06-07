@@ -30,6 +30,8 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         
+        this.setTitle("Knuckle Head: MMA Fighter Database");
+        
         this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());

@@ -28,8 +28,6 @@ public class FighterListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
- 
-	    // TODO make a better drawable for the list item backgrounds (selector)
         
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));

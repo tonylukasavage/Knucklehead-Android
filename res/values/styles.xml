@@ -2,6 +2,7 @@
 <resources> 
    <style name="WindowTitleBackground">     
 	    <item name="android:paddingLeft">6dip</item>
-        <item name="android:background">@drawable/title_bg</item>               
+        <item name="android:background">@drawable/title_bg</item>  
+        <item name="android:layout_height">100dip</item>             
     </style>
 </resources>
