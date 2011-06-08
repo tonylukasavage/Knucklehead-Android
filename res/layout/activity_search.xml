@@ -4,6 +4,7 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/carbon_fibre_repeat"
 	android:id="@+id/main_view"
+	android:gravity="bottom"
 	>
 	<LinearLayout 
 	    android:orientation="vertical"

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,10 +20,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
 public class SearchActivity extends Activity {	
@@ -57,11 +61,20 @@ public class SearchActivity extends Activity {
         
         // setup AdMob ad view
         Knucklehead kh = (Knucklehead)getApplicationContext();
-        //FrameLayout layout = (FrameLayout)findViewById(R.id.main_view);
-        //adView = new AdView(this, AdSize.BANNER, kh.getAdmobId());
-        //adView.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+        FrameLayout layout = (FrameLayout)findViewById(R.id.main_view);
+        adView = new AdView(this, AdSize.BANNER, kh.getAdmobId());
+        adView.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+        
+        FrameLayout.LayoutParams adsParams =
+	        	new FrameLayout.LayoutParams(
+	        		FrameLayout.LayoutParams.WRAP_CONTENT, 
+	        		FrameLayout.LayoutParams.WRAP_CONTENT, 
+	        		Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL
+	        	); 
+        layout.addView(adView, adsParams );
+        
         //layout.addView(adView);
-        //adView.loadAd(new AdRequest());
+        adView.loadAd(new AdRequest());
     }
     
     @Override
