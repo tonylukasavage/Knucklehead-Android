@@ -6,13 +6,18 @@
 	android:id="@+id/main_view"
 	android:orientation="vertical"
 	>
+	<View
+		android:layout_height="0dip"
+		android:layout_weight="0.5"
+		android:layout_width="fill_parent"
+		/>
 	<LinearLayout 
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
-	    android:layout_height="0dip"
-	    android:layout_weight="1.0"
+	    android:layout_height="wrap_content"
 	    android:gravity="center"
-		android:padding="40dip"
+		android:paddingLeft="40dip"
+		android:paddingRight="40dip"
 	    >
 	    <TextView
 		    android:text="Fighter Search"
@@ -74,6 +79,11 @@
 			android:background="@drawable/search_button"
 		/>
 	</LinearLayout>
+	<View
+		android:layout_height="0dip"
+		android:layout_weight="0.5"
+		android:layout_width="fill_parent"
+		/>
 	<com.google.ads.AdView
 		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
 		android:id="@+id/adView"
