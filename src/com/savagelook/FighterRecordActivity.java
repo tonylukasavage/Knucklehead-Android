@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,26 +22,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FighterRecordActivity extends Activity {
+	private AdView adView;
+	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_fights);
         
+	     // setup AdMob ad view
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest();
+        adRequest.setGender(AdRequest.Gender.MALE);
+        adView.loadAd(adRequest);
+        
         try {
 	        	// get json from Intent
 	        	String jsonString = getIntent().getStringExtra("json");
-	        JSONObject json = new JSONObject(jsonString);
-        	
-	        	// set fighter name
-//	        	JSONArray profileJsonArray = json.getJSONArray("profile");
-//	        	for (int i = 0; i < profileJsonArray.length(); i++ ) {
-//		        	JSONObject item = profileJsonArray.getJSONObject(i);
-//		        	String key = item.getString("k");
-//		        	String value = item.getString("v");
-//		        	
-//		        	if (key.toLowerCase().equals("name")) {
-//			        	((TextView)findViewById(R.id.fighter_name_vs)).setText(value + " vs.");	    	
-//		        	}
-//	        	}       	
+	        JSONObject json = new JSONObject(jsonString);       	
         	
 		    // set fight list
 	        ListView fightList = (ListView)findViewById(R.id.fight_list);
@@ -61,6 +60,12 @@ public class FighterRecordActivity extends Activity {
         } catch (Exception e) {
 	        // do something	
         }
+    }
+    
+    @Override
+	public void onDestroy() {
+	    	adView.destroy();
+	    	super.onDestroy();
     }
     
     @Override

@@ -5,23 +5,25 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     >
-    <!--  
-    <TextView
-	    android:id="@+id/fighter_name_vs"
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:paddingLeft="12dip"
-	    android:textColor="#ffffff"
-	    android:textSize="12dip"
-	    />
-	    -->
 	<ListView
 		android:id="@+id/fight_list"
-		android:layout_height="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1.0"
 		android:layout_width="fill_parent"
 		android:divider="@android:color/transparent"
 		android:dividerHeight="6.0dip"
 		android:paddingTop="6dip"	
 		>
 	</ListView>
+	<com.google.ads.AdView
+		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
+		android:id="@+id/adView"
+		android:layout_width="fill_parent" 
+		ads:adSize="BANNER"
+		ads:adUnitId="@string/admobId"
+		ads:loadAdOnCreate="false"
+		android:visibility="visible"
+		android:layout_gravity="bottom"
+		android:layout_height="50dip"
+		/>
 </LinearLayout>

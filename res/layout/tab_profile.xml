@@ -64,7 +64,19 @@
 	<ListView
 		android:id="@+id/profile_listview"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="0dip"
+		android:layout_weight="1.0"
 		android:background="#000000"
+		/>
+	<com.google.ads.AdView
+		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
+		android:id="@+id/adView"
+		android:layout_width="fill_parent" 
+		ads:adSize="BANNER"
+		ads:adUnitId="@string/admobId"
+		ads:loadAdOnCreate="false"
+		android:visibility="visible"
+		android:layout_gravity="bottom"
+		android:layout_height="50dip"
 		/>
 </LinearLayout>

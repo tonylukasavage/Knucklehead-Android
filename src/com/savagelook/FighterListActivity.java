@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,11 +26,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FighterListActivity extends ListActivity {
+	private AdView adView;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        
+	    // setup AdMob ad view
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest();
+        adRequest.setGender(AdRequest.Gender.MALE);
+        adView.loadAd(adRequest);
         
 		try {
 			JSONArray jsonFighters = new JSONArray(getIntent().getStringExtra("json"));
@@ -51,6 +62,12 @@ public class FighterListActivity extends ListActivity {
 		} catch (Exception e) {
 			// do something
 		}
+    }
+    
+    @Override
+	public void onDestroy() {
+	    	adView.destroy();
+	    	super.onDestroy();
     }
     
     private class FighterDetailsTask extends JsonAsyncTask {

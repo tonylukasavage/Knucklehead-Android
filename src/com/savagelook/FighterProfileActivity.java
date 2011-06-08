@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +30,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FighterProfileActivity extends Activity {
+	private AdView adView;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_profile);
+        
+	     // setup AdMob ad view
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest();
+        adRequest.setGender(AdRequest.Gender.MALE);
+        adView.loadAd(adRequest);
         
         try {
 			JSONObject json = new JSONObject(getIntent().getStringExtra("json"));
@@ -82,8 +93,13 @@ public class FighterProfileActivity extends Activity {
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-        
+		}     
+    }
+	
+	@Override
+	public void onDestroy() {
+	    	adView.destroy();
+	    	super.onDestroy();
     }
     
     private Drawable createDrawableFromURL(String urlString) {

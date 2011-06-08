@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@drawable/carbon_fibre_repeat"
 	android:id="@+id/main_view"
-	android:gravity="bottom"
+	android:orientation="vertical"
 	>
 	<LinearLayout 
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	    android:layout_height="0dip"
+	    android:layout_weight="1.0"
 	    android:gravity="center"
 		android:padding="40dip"
 	    >
@@ -73,4 +74,15 @@
 			android:background="@drawable/search_button"
 		/>
 	</LinearLayout>
-</FrameLayout>
+	<com.google.ads.AdView
+		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
+		android:id="@+id/adView"
+		android:layout_width="fill_parent" 
+		ads:adSize="BANNER"
+		ads:adUnitId="@string/admobId"
+		ads:loadAdOnCreate="false"
+		android:visibility="visible"
+		android:layout_gravity="bottom"
+		android:layout_height="50dip"
+		/>
+</LinearLayout>
