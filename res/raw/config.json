@@ -3,4 +3,5 @@
 	"connectTimeout":"1000",
 	"readTimeout":"4000",
 	"retries":"3"
+	"admobId":"a14dee86c85301c"
 }

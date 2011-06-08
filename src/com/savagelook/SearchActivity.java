@@ -23,20 +23,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.google.ads.AdView;
+
 public class SearchActivity extends Activity {	
+	private AdView adView;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        
         this.setTitle("Knuckle Head: MMA Fighter Database");
         
+        // setup spinner and edit text fields 
         this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new MyOnEditorActionListener());
         
+        // setup the search button's click handler
         Button b = (Button)findViewById(R.id.search);
         b.setOnClickListener(new OnClickListener() {
 			@Override
@@ -49,6 +54,20 @@ public class SearchActivity extends Activity {
 				}		
 			}
 		});
+        
+        // setup AdMob ad view
+        Knucklehead kh = (Knucklehead)getApplicationContext();
+        //FrameLayout layout = (FrameLayout)findViewById(R.id.main_view);
+        //adView = new AdView(this, AdSize.BANNER, kh.getAdmobId());
+        //adView.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+        //layout.addView(adView);
+        //adView.loadAd(new AdRequest());
+    }
+    
+    @Override
+	public void onDestroy() {
+	    	adView.destroy();
+	    	super.onDestroy();
     }
     
     @Override
@@ -105,7 +124,7 @@ public class SearchActivity extends Activity {
 					Toaster.toast(context, R.string.oops);
 				}
 			} catch (JSONException e) {
-				Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+				Log.e(tag, Lazy.Exception.getStackTrace(e));
 				Toaster.toast(context, R.string.oops);
 			} finally {	
 				mProgressDialog.dismiss();

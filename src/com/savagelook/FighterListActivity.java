@@ -98,7 +98,7 @@ public class FighterListActivity extends ListActivity {
 					Toaster.toast(context, R.string.oops);
 				}
 			} catch (JSONException e) {
-				Log.e(tag, e.getMessage() + "\n" + e.getStackTrace());
+				Log.e(tag, Lazy.Exception.getStackTrace(e));
 				Toaster.toast(context, R.string.oops);
 			} finally {	
 				mProgressDialog.dismiss();
