@@ -1,4 +1,4 @@
-package com.savagelook;
+package com.savagelook.knucklehead;
 
 public class KeyValuePair {
 	private String key;

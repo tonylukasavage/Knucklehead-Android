@@ -2,19 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:layout_gravity="center_horizontal"
     >
 	<ListView
 		android:id="@+id/fight_list"
-		android:layout_height="0dip"
-		android:layout_weight="1.0"
+		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:divider="@android:color/transparent"
 		android:dividerHeight="6.0dip"
 		android:paddingTop="6dip"	
 		>
 	</ListView>
+	<View
+		android:background="#000000"
+		android:layout_height="0dip"
+		android:layout_weight="1.0"
+		android:layout_width="fill_parent"
+		/>
 	<com.google.ads.AdView
 		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
 		android:id="@+id/adView"

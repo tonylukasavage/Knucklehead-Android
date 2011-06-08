@@ -1,4 +1,4 @@
-package com.savagelook;
+package com.savagelook.knucklehead;
 
 import android.app.TabActivity;
 import android.content.Intent;
