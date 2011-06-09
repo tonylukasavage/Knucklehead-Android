@@ -1,5 +1,6 @@
 package com.savagelook.knucklehead;
 
+import com.savagelook.*;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,8 @@ public class Toaster {
 		TextView text = (TextView)layout.findViewById(R.id.text);
 		text.setText(message);
 		
-		Toast toast = new Toast(context);
+		Toast toast = ToastSingleton.getInstance(context);
+		toast.cancel();
 		toast.setDuration(duration);
 		toast.setView(layout);
 		toast.show();	
