@@ -147,12 +147,8 @@ public class SearchActivity extends Activity {
 	    String lastname = qfix(((EditText)findViewById(R.id.lastname)).getText().toString());
 	    String nickname = qfix(((EditText)findViewById(R.id.nickname)).getText().toString());
 	    
-	    
-	    Spinner spinner = (Spinner)findViewById(R.id.weightclasses);
 	    @SuppressWarnings("unchecked")
-	    KeyValuePair<String,String> pair = (KeyValuePair<String,String>)spinner.getSelectedItem();
-	    String weightclass = qfix(pair.getValue());
-	    //String weightclass = qfix(((KeyValuePair<String,String>)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
+	    String weightclass = qfix(((KeyValuePair<String,String>)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
 	    
 	    if (!firstname.equals("")) {
 		    	params += "firstname=" + firstname + "&";
