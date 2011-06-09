@@ -1,5 +1,7 @@
 package com.savagelook.knucklehead.activity;
 
+import java.io.IOException;
+
 import com.savagelook.knucklehead.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,8 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.savagelook.*;
 
-public class SearchActivity extends Activity {	
+public class SearchActivity extends Activity {
+	private static final String TAG = "SearchAtivity";
 	private AdView adView;
 	
     /** Called when the activity is first created. */
@@ -53,7 +56,13 @@ public class SearchActivity extends Activity {
 				if (url.equals("")) {
 					KHToaster.toast(getApplicationContext(), R.string.search_empty);
 				} else {
-					new FighterSearchTask().execute(url);
+					FighterSearchTask task = new FighterSearchTask(SearchActivity.this);
+					KHApplication kh = (KHApplication)getApplicationContext();
+					task.setMessageLoading("Searching for fighters...");
+					task.setRetryCount(kh.getRetries());
+					task.setTimeoutConnect(kh.getConnectTimeout());
+					task.setTimeoutRead(kh.getReadTimeout());
+					task.execute(url);
 				}		
 			}
 		});
@@ -79,61 +88,29 @@ public class SearchActivity extends Activity {
 	    	return false;
     }
     
-    private class FighterSearchTask extends JsonAsyncTask {
-	    	private ProgressDialog mProgressDialog = null;
-	    	
-	    	@Override
-	    	protected JSONObject doInBackground(String... searchUrls) {
-	    		String url = searchUrls[0];
-	    		KHApplication kd = (KHApplication)getApplicationContext();
-	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
-	    	}
-	    	
-	    	@Override 
-	    	protected void onPreExecute() {
-	    		mProgressDialog = ProgressDialog.show(
-	    			SearchActivity.this, 
-	    			"", 
-	    			"Searching for fighters...", 
-	    			true,
-	    			true,
-	    			new DialogInterface.OnCancelListener() {	
-					@Override
-					public void onCancel(DialogInterface arg0) {
-						FighterSearchTask.this.cancel(true);
-					}
-				});
-	    	}
-	    	
-	    	@Override
+    private class FighterSearchTask extends UrlJsonAsyncTask {
+		public FighterSearchTask(Context context) {
+			super(context);
+		}
+
+		@Override
 	    	protected void onPostExecute(JSONObject json) {
-	    		Context context = SearchActivity.this; 
-	    		String tag = "FighterSearchTask.onPostExecute()";
-	    		
 	    		try {
-				if (json != null) {
-					if (json.getBoolean("success")) {
-						Class<?> intentClass = json.getString("info").equals("list") ? FighterListActivity.class : FighterTabActivity.class;
-						Intent intent = new Intent(context, intentClass);
-						intent.putExtra("json", json.getString("data").toString());
-						startActivity(intent);
-					} else {
-						KHToaster.toast(context, json.getString("info"));
-					}
-				} else {
-					Log.e(tag, "JSON was null, there was a problem in queryFighters() constructing it.");
-					KHToaster.toast(context, R.string.oops);
-				}
+	    			this.validateJson(json);
+				Class<?> intentClass = json.getString("info").equals("list") ? FighterListActivity.class : FighterTabActivity.class;
+				Intent intent = new Intent(context, intentClass);
+				intent.putExtra("json", json.getString("data").toString());
+				startActivity(intent);
+	    		} catch (IOException e) {
+	    			KHToaster.toast(this.context, e.getMessage());
 			} catch (JSONException e) {
-				Log.e(tag, Lazy.Exception.getStackTrace(e));
-				KHToaster.toast(context, R.string.oops);
+				Log.e(TAG, Lazy.Ex.getStackTrace(e));
+				KHToaster.toast(context, this.getMessageError());
 			} finally {	
-				mProgressDialog.dismiss();
-				mProgressDialog = null;
+				super.onPostExecute(json);
 			}
 	    	}
-	
-	}
+    }
     
     private String qfix(String value) {
 	    	return java.net.URLEncoder.encode(value.trim());

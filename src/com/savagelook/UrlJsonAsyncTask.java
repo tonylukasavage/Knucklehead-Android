@@ -1,5 +1,6 @@
 package com.savagelook;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import org.json.JSONException;
@@ -11,8 +12,8 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject> {
-	private static final String TAG = "JsonToActivityAsyncTask";
+public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
+	private static final String TAG = "UrlJsonAsyncTask";
 	private static final String LOADING_TITLE = "";
 	private static final String MESSAGE_LOADING = "Loading, please wait...";
 	private static final String MESSAGE_BUSY = "Server is busy. Please try again.";
@@ -22,10 +23,9 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 	private static final int RETRY_COUNT = 0;
 	private static final String JSON_SUCCESS = "success";
 	private static final String JSON_INFO = "info";
-	private static final String JSON_DATA = "data";
 	
 	private ProgressDialog progressDialog = null;
-	private Context context = null;
+	protected Context context = null;
 	private String loadingTitle;
 	private String messageLoading;
 	private String messageBusy;
@@ -35,9 +35,8 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 	private int retryCount;
 	private String jsonSuccess;
 	private String jsonInfo;
-	private String jsonData;
 	
-	public JsonToActivityAsyncTask(Context context) {
+	public UrlJsonAsyncTask(Context context) {
 		this.context = context;	
 		this.loadingTitle = LOADING_TITLE;
 		this.messageLoading = MESSAGE_LOADING;	
@@ -48,7 +47,6 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 		this.retryCount = RETRY_COUNT;
 		this.jsonSuccess = JSON_SUCCESS;
 		this.jsonInfo = JSON_INFO;
-		this.jsonData = JSON_DATA;
 	} 
 	
 	@Override
@@ -67,7 +65,7 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 			new DialogInterface.OnCancelListener() {	
 				@Override
 				public void onCancel(DialogInterface arg0) {
-					JsonToActivityAsyncTask.this.cancel(true);
+					UrlJsonAsyncTask.this.cancel(true);
 				}
 			}
 		);
@@ -79,6 +77,19 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 			progressDialog.dismiss();
 		}
 		progressDialog = null;
+	}
+	
+	protected void validateJson(JSONObject json) throws JSONException, IOException {
+		if (json != null) {
+			if (json.getBoolean("success")) {
+				// success
+				return;
+			} else {
+				throw new IOException(json.getString("info"));
+			}
+		} else {
+			throw new IOException(this.messageError);
+		} 
 	}
 	
 	protected JSONObject queryUrlForJson(String url) {
@@ -99,11 +110,12 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 		    		if (retries-- > 0) {
 		    			json = queryUrlForJson(url);
 		    		} else {
-					//Log.e(TAG, Lazy.Exception.getStackTrace(e));
+					Log.e(TAG, Lazy.Ex.getStackTrace(e));
 			    		json.put(this.jsonInfo, this.messageError);	
 		    		}
 		    	} 
 		} catch (JSONException e) {
+			Log.e(TAG, Lazy.Ex.getStackTrace(e));
 			return null;
 		}
 	    	
@@ -180,13 +192,5 @@ public class JsonToActivityAsyncTask extends AsyncTask<String, Void, JSONObject>
 
 	public void setJsonInfo(String jsonInfo) {
 		this.jsonInfo = jsonInfo;
-	}
-
-	public String getJsonData() {
-		return jsonData;
-	}
-
-	public void setJsonData(String jsonData) {
-		this.jsonData = jsonData;
 	}
 }

@@ -30,7 +30,7 @@ public abstract class JsonAsyncTask extends AsyncTask<String, Void, JSONObject> 
 		    		if (retries-- > 0) {
 		    			json = queryUrlForJson(url, connectTimeout, readTimeout, retries, tooBusy, oops);
 		    		} else {
-					Log.e(tag, Lazy.Exception.getStackTrace(e));
+					Log.e(tag, Lazy.Ex.getStackTrace(e));
 			    		json.put("info", oops);	
 		    		}
 		    	} 
