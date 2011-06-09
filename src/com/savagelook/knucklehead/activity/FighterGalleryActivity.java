@@ -1,4 +1,4 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -1,5 +1,6 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.activity;
 
+import com.savagelook.knucklehead.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;

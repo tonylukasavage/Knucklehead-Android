@@ -1,5 +1,6 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.activity;
 
+import com.savagelook.knucklehead.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

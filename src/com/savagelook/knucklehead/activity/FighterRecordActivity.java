@@ -1,5 +1,6 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.activity;
 
+import com.savagelook.knucklehead.*;
 import com.savagelook.knucklehead.model.*;
 import java.util.ArrayList;
 

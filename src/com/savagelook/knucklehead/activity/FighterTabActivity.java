@@ -1,5 +1,6 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.activity;
 
+import com.savagelook.knucklehead.*;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
