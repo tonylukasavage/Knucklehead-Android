@@ -1,4 +1,4 @@
-package com.savagelook.knucklehead;
+package com.savagelook;
 
 import java.io.BufferedReader;
 import java.io.IOException;

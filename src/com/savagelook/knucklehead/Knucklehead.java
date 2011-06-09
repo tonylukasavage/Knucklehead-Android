@@ -1,5 +1,6 @@
 package com.savagelook.knucklehead;
 
+import com.savagelook.*;
 import java.io.IOException;
 
 import org.json.JSONException;
