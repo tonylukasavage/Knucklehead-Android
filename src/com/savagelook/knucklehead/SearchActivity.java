@@ -25,6 +25,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.savagelook.KeyValuePair;
 
 public class SearchActivity extends Activity {	
 	private AdView adView;
@@ -144,7 +145,13 @@ public class SearchActivity extends Activity {
 	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());
 	    String lastname = qfix(((EditText)findViewById(R.id.lastname)).getText().toString());
 	    String nickname = qfix(((EditText)findViewById(R.id.nickname)).getText().toString());
-	    String weightclass = qfix(((KeyValuePair)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
+	    
+	    
+	    Spinner spinner = (Spinner)findViewById(R.id.weightclasses);
+	    @SuppressWarnings("unchecked")
+	    KeyValuePair<String,String> pair = (KeyValuePair<String,String>)spinner.getSelectedItem();
+	    String weightclass = qfix(pair.getValue());
+	    //String weightclass = qfix(((KeyValuePair<String,String>)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
 	    
 	    if (!firstname.equals("")) {
 		    	params += "firstname=" + firstname + "&";
@@ -168,15 +175,15 @@ public class SearchActivity extends Activity {
     
     private void setupKeyValueSpinner(int spinnerId, int jsonId) {
 	    	Spinner s = (Spinner)findViewById(spinnerId);
-        ArrayAdapter<KeyValuePair> adapter = new ArrayAdapter<KeyValuePair>(this, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<KeyValuePair<String,String>> adapter = new ArrayAdapter<KeyValuePair<String,String>>(this, android.R.layout.simple_spinner_item);
+	    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         s.setAdapter(adapter);	
         
         try {
 	        	JSONArray entries = JsonHelper.getJsonArrayFromResource(this, jsonId);
 		    for (int i = 0; i < entries.length(); i++) {
 			    	JSONObject pair = entries.getJSONObject(i);
-			    adapter.add(new KeyValuePair(pair.getString("k"), pair.getString("v")));
+			    adapter.add(new KeyValuePair<String,String>(pair.getString("k"), pair.getString("v")));
 		    }
         } catch (Exception e) {
 	        	// do something

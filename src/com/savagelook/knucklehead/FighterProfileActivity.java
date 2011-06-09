@@ -12,9 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +25,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.savagelook.KeyValuePair;
 
 public class FighterProfileActivity extends Activity {
 	private AdView adView;
@@ -55,7 +56,7 @@ public class FighterProfileActivity extends Activity {
 	        TextView tvRecord = (TextView)findViewById(R.id.fighter_record_text);
 	        ListView listView = (ListView)findViewById(R.id.profile_listview);
 	        JSONArray profileJsonArray = json.getJSONArray("profile");
-	        ArrayList<KeyValuePair> pairs = new ArrayList<KeyValuePair>();        
+	        ArrayList<KeyValuePair<String,String>> pairs = new ArrayList<KeyValuePair<String,String>>();        
 	        
 	        // set the name, nickname, and record
 	        for (int i = 0; i < profileJsonArray.length(); i++ ) {
@@ -76,7 +77,7 @@ public class FighterProfileActivity extends Activity {
 			        		tvRecord.setText(value);
 		        		}
 		        	} else {
-			        	pairs.add(new KeyValuePair(key, value));
+			        	pairs.add(new KeyValuePair<String,String>(key, value));
 		        	}
 	        }
 	        
@@ -127,10 +128,10 @@ public class FighterProfileActivity extends Activity {
 	    	return false;
     }
     
-    private class FighterProfileAdapter extends ArrayAdapter<KeyValuePair> {
-	    	private ArrayList<KeyValuePair> pairs;
+    private class FighterProfileAdapter extends ArrayAdapter<KeyValuePair<String,String>> {
+	    	private ArrayList<KeyValuePair<String,String>> pairs;
 	    	
-	    	public FighterProfileAdapter(Context context, int textViewResourceId, ArrayList<KeyValuePair> pairs) {
+	    	public FighterProfileAdapter(Context context, int textViewResourceId, ArrayList<KeyValuePair<String,String>> pairs) {
 		    	super(context, textViewResourceId, pairs);
 		    	this.pairs = pairs;
 	    	}
