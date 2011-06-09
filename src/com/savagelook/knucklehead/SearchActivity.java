@@ -25,8 +25,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.JsonHelper;
-import com.savagelook.KeyValuePair;
+import com.savagelook.*;
 
 public class SearchActivity extends Activity {	
 	private AdView adView;
