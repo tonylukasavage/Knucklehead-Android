@@ -1,21 +1,14 @@
 package com.savagelook.knucklehead.activity;
 
-import com.savagelook.knucklehead.*;
-import com.savagelook.*;
-import com.savagelook.knucklehead.model.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
-
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +21,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.savagelook.Lazy;
+import com.savagelook.UrlJsonAsyncTask;
+import com.savagelook.knucklehead.KHApplication;
+import com.savagelook.knucklehead.KHToaster;
+import com.savagelook.knucklehead.R;
+import com.savagelook.knucklehead.model.Fighter;
+
 public class FighterListActivity extends ListActivity {
+	private static final String TAG = "FighterListActivity";
 	private AdView adView;
 	
     /** Called when the activity is first created. */
@@ -59,7 +62,13 @@ public class FighterListActivity extends ListActivity {
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					Fighter fighter = fighters.get(position);
 					String url = constructFighterUrl(fighter.getLink());
-					new FighterDetailsTask().execute(url);
+					//new FighterDetailsTask().execute(url);
+					
+					KHApplication kh = (KHApplication)getApplicationContext();
+					FighterDetailsTask task = new FighterDetailsTask(FighterListActivity.this);
+					task.setMessageLoading("Loading fighter details...");
+					task.setConnectionParams(kh.getConnectTimeout(), kh.getReadTimeout(), kh.getRetries());
+					task.execute(url);
 				}
 			});
 		} catch (Exception e) {
@@ -73,59 +82,28 @@ public class FighterListActivity extends ListActivity {
 	    	super.onDestroy();
     }
     
-    private class FighterDetailsTask extends JsonAsyncTask {
-	    	private ProgressDialog mProgressDialog = null;
-	
-	    	@Override
-	    	protected JSONObject doInBackground(String... searchUrls) {
-	    		String url = searchUrls[0];
-	    		KHApplication kd = (KHApplication)getApplicationContext();
-	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
-	    	}
-	    	
-	    	@Override 
-	    	protected void onPreExecute() {
-	    		mProgressDialog = ProgressDialog.show(
-	    			FighterListActivity.this, 
-	    			"", 
-	    			"Loading fighter details...", 
-	    			true,
-	    			true,
-	    			new DialogInterface.OnCancelListener() {	
-					@Override
-					public void onCancel(DialogInterface arg0) {
-						FighterDetailsTask.this.cancel(true);
-					}
-				});
-	    	}
-	    	
-	    	@Override
+    private class FighterDetailsTask extends UrlJsonAsyncTask {
+		public FighterDetailsTask(Context context) {
+			super(context);
+		}
+
+		@Override
 	    	protected void onPostExecute(JSONObject json) {
-	    		Context context = FighterListActivity.this; 
-	    		String tag = "FighterDetailsTask.onPostExecute()";
-	    		
 	    		try {
-				if (json != null) {
-					if (json.getBoolean("success")) {
-						Intent intent = new Intent(context, FighterTabActivity.class);
-						intent.putExtra("json", json.getString("data").toString());
-						startActivity(intent);
-					} else {
-						KHToaster.toast(context, json.getString("info"));
-					}
-				} else {
-					Log.e(tag, "JSON was null, there was a problem in queryFighters() constructing it.");
-					KHToaster.toast(context, R.string.oops);
-				}
+	    			this.validateJson(json);
+	    			Intent intent = new Intent(context, FighterTabActivity.class);
+				intent.putExtra("json", json.getString("data").toString());
+				startActivity(intent);
+	    		} catch (IOException e) {
+	    			KHToaster.toast(this.context, e.getMessage());
 			} catch (JSONException e) {
-				Log.e(tag, Lazy.Ex.getStackTrace(e));
-				KHToaster.toast(context, R.string.oops);
+				Log.e(TAG, Lazy.Ex.getStackTrace(e));
+				KHToaster.toast(context, this.getMessageError());
 			} finally {	
-				mProgressDialog.dismiss();
-				mProgressDialog = null;
+				super.onPostExecute(json);
 			}
 	    	}
-	}
+    }
     
     private String qfix(String value) {
 	    	return java.net.URLEncoder.encode(value.trim());

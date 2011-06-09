@@ -2,15 +2,12 @@ package com.savagelook.knucklehead.activity;
 
 import java.io.IOException;
 
-import com.savagelook.knucklehead.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +25,13 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.*;
+import com.savagelook.JsonHelper;
+import com.savagelook.KeyValuePair;
+import com.savagelook.Lazy;
+import com.savagelook.UrlJsonAsyncTask;
+import com.savagelook.knucklehead.KHApplication;
+import com.savagelook.knucklehead.KHToaster;
+import com.savagelook.knucklehead.R;
 
 public class SearchActivity extends Activity {
 	private static final String TAG = "SearchAtivity";
@@ -56,12 +59,10 @@ public class SearchActivity extends Activity {
 				if (url.equals("")) {
 					KHToaster.toast(getApplicationContext(), R.string.search_empty);
 				} else {
-					FighterSearchTask task = new FighterSearchTask(SearchActivity.this);
 					KHApplication kh = (KHApplication)getApplicationContext();
+					FighterSearchTask task = new FighterSearchTask(SearchActivity.this);
 					task.setMessageLoading("Searching for fighters...");
-					task.setRetryCount(kh.getRetries());
-					task.setTimeoutConnect(kh.getConnectTimeout());
-					task.setTimeoutRead(kh.getReadTimeout());
+					task.setConnectionParams(kh.getConnectTimeout(), kh.getReadTimeout(), kh.getRetries());
 					task.execute(url);
 				}		
 			}

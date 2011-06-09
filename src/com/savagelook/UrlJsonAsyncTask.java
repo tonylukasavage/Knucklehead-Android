@@ -121,6 +121,12 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 	    	
 	    	return json;
 	}
+	
+	public void setConnectionParams(int timeoutConnect, int timeoutRead, int retryCount) {
+		this.timeoutConnect = timeoutConnect;
+		this.timeoutRead = timeoutRead;
+		this.retryCount = retryCount;
+	}
 
 	public String getLoadingTitle() {
 		return loadingTitle;
