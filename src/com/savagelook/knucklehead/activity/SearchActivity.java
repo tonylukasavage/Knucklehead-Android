@@ -85,7 +85,7 @@ public class SearchActivity extends Activity {
 	    	@Override
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
-	    		Knucklehead kd = (Knucklehead)getApplicationContext();
+	    		KHApplication kd = (KHApplication)getApplicationContext();
 	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
 	    	}
 	    	
@@ -140,7 +140,7 @@ public class SearchActivity extends Activity {
     }
     
     private String constructSearchUrl() {
-	    	String url = ((Knucklehead)getApplicationContext()).getProxy();
+	    	String url = ((KHApplication)getApplicationContext()).getProxy();
 	    	String params = "";
 	    	
 	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());

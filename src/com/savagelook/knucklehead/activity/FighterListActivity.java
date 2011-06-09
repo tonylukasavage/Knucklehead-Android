@@ -79,7 +79,7 @@ public class FighterListActivity extends ListActivity {
 	    	@Override
 	    	protected JSONObject doInBackground(String... searchUrls) {
 	    		String url = searchUrls[0];
-	    		Knucklehead kd = (Knucklehead)getApplicationContext();
+	    		KHApplication kd = (KHApplication)getApplicationContext();
 	    		return queryUrlForJson(url, kd.getConnectTimeout(), kd.getReadTimeout(), kd.getRetries(), getString(R.string.too_busy), getString(R.string.oops));
 	    	}
 	    	
@@ -132,7 +132,7 @@ public class FighterListActivity extends ListActivity {
 	}
 	
 	private String constructFighterUrl(String fighterUrl) {
-		return ((Knucklehead)getApplicationContext()).getProxy() + "link=" + qfix(fighterUrl);
+		return ((KHApplication)getApplicationContext()).getProxy() + "link=" + qfix(fighterUrl);
 	}
     
     @Override

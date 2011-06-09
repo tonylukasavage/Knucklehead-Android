@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.app.Application;
 
-public class Knucklehead extends Application {
+public class KHApplication extends Application {
 	private String proxy;
 	private int connectTimeout;
 	private int readTimeout;
