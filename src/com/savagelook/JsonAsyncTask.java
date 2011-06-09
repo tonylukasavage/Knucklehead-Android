@@ -1,6 +1,5 @@
-package com.savagelook.knucklehead;
+package com.savagelook;
 
-import com.savagelook.*;
 import java.net.SocketTimeoutException;
 
 import org.json.JSONException;
@@ -10,6 +9,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public abstract class JsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
+	private static final String MESSAGE_BUSY = "Server is busy. Please try again.";
+	private static final String MESSAGE_ERROR = "There was an error processing your request. Please try again.";
+	
 	protected JSONObject queryUrlForJson(String url, int connectTimeout, int readTimeout, int retries, String tooBusy, String oops) {
 		JSONObject json = new JSONObject();
 		String tag = "queryUrlForJson()";
@@ -37,5 +39,17 @@ public abstract class JsonAsyncTask extends AsyncTask<String, Void, JSONObject> 
 		}
 	    	
 	    	return json;
+	}
+	
+	protected JSONObject queryUrlForJson(String url, int connectTimeout, int readTimeout, int retries) {
+		return queryUrlForJson(url, connectTimeout, readTimeout, retries, MESSAGE_BUSY, MESSAGE_ERROR);	
+	}
+	
+	protected JSONObject queryUrlForJson(String url, int connectTimeout, int readTimeout) {
+		return queryUrlForJson(url, connectTimeout, readTimeout, 0, MESSAGE_BUSY, MESSAGE_ERROR);	
+	}
+	
+	protected JSONObject queryUrlForJson(String url) {
+		return queryUrlForJson(url, 0, 0, 0, MESSAGE_BUSY, MESSAGE_ERROR);	
 	}
 }
