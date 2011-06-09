@@ -1,6 +1,7 @@
 package com.savagelook.knucklehead;
 
 import com.savagelook.*;
+import com.savagelook.knucklehead.model.*;
 import java.util.ArrayList;
 
 import org.json.JSONArray;

@@ -1,4 +1,4 @@
-package com.savagelook.knucklehead;
+package com.savagelook.knucklehead.model;
 
 import org.json.*;
 
