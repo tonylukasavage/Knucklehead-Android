@@ -111,15 +111,15 @@ public class FighterListActivity extends ListActivity {
 						intent.putExtra("json", json.getString("data").toString());
 						startActivity(intent);
 					} else {
-						Toaster.toast(context, json.getString("info"));
+						KHToaster.toast(context, json.getString("info"));
 					}
 				} else {
 					Log.e(tag, "JSON was null, there was a problem in queryFighters() constructing it.");
-					Toaster.toast(context, R.string.oops);
+					KHToaster.toast(context, R.string.oops);
 				}
 			} catch (JSONException e) {
 				Log.e(tag, Lazy.Exception.getStackTrace(e));
-				Toaster.toast(context, R.string.oops);
+				KHToaster.toast(context, R.string.oops);
 			} finally {	
 				mProgressDialog.dismiss();
 				mProgressDialog = null;
