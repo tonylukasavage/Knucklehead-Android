@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.savagelook.Toaster;
+import com.savagelook.android.Toaster;
 
 public class KHToaster {
 	public static void toast(Context context, String message) {

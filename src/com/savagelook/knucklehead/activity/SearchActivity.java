@@ -25,10 +25,10 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.JsonHelper;
-import com.savagelook.KeyValuePair;
-import com.savagelook.Lazy;
-import com.savagelook.UrlJsonAsyncTask;
+import com.savagelook.android.JsonHelper;
+import com.savagelook.android.KeyValuePair;
+import com.savagelook.android.Lazy;
+import com.savagelook.android.UrlJsonAsyncTask;
 import com.savagelook.knucklehead.KHApplication;
 import com.savagelook.knucklehead.KHToaster;
 import com.savagelook.knucklehead.R;

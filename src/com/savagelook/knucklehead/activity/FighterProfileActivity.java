@@ -1,5 +1,6 @@
 package com.savagelook.knucklehead.activity;
 
+import com.savagelook.android.KeyValuePair;
 import com.savagelook.knucklehead.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.KeyValuePair;
 
 public class FighterProfileActivity extends Activity {
 	private AdView adView;

@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.Lazy;
-import com.savagelook.UrlJsonAsyncTask;
+import com.savagelook.android.Lazy;
+import com.savagelook.android.UrlJsonAsyncTask;
 import com.savagelook.knucklehead.KHApplication;
 import com.savagelook.knucklehead.KHToaster;
 import com.savagelook.knucklehead.R;

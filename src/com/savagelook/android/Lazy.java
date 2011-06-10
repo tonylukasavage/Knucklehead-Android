@@ -1,4 +1,4 @@
-package com.savagelook;
+package com.savagelook.android;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -1,12 +1,13 @@
 package com.savagelook.knucklehead;
 
-import com.savagelook.*;
 import java.io.IOException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Application;
+
+import com.savagelook.android.JsonHelper;
 
 public class KHApplication extends Application {
 	private String proxy;

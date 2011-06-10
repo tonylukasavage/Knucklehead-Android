@@ -1,4 +1,4 @@
-package com.savagelook;
+package com.savagelook.android;
 
 import android.content.Context;
 import android.view.View;
