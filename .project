@@ -30,4 +30,22 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>com.savagelook.android</name>
+			<type>2</type>
+			<location>/Users/tonylukasavage/Documents/eclipse/workspace/com.savagelook.android</location>
+		</link>
+	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1307727185730</id>
+			<name>com.savagelook.android</name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-.DS_Store</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
