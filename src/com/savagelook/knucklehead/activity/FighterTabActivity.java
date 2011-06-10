@@ -38,7 +38,7 @@ public class FighterTabActivity extends TabActivity {
 
         intent = new Intent().setClass(this, FighterGalleryActivity.class);
         intent.putExtra("json", getIntent().getStringExtra("json"));
-        spec = tabHost.newTabSpec("pictures").setIndicator("Pictures",
+        spec = tabHost.newTabSpec("pictures").setIndicator("Gallery",
                           res.getDrawable(R.drawable.ic_tab_pictures))
                       .setContent(intent);
         tabHost.addTab(spec);
