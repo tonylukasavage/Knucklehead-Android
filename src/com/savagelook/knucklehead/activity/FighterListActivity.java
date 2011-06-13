@@ -104,13 +104,9 @@ public class FighterListActivity extends ListActivity {
 			}
 	    	}
     }
-    
-    private String qfix(String value) {
-	    	return java.net.URLEncoder.encode(value.trim());
-	}
 	
 	private String constructFighterUrl(String fighterUrl) {
-		return ((KHApplication)getApplicationContext()).getProxy() + "link=" + qfix(fighterUrl);
+		return ((KHApplication)getApplicationContext()).getProxy() + "link=" + Lazy.Str.urlEncode(fighterUrl);
 	}
     
     @Override

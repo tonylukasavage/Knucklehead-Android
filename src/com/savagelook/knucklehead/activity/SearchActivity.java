@@ -45,7 +45,8 @@ public class SearchActivity extends Activity {
         this.setTitle("Knuckle Head: MMA Fighter Database");
         
         // setup spinner and edit text fields 
-        this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
+        //this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
+        
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new MyOnEditorActionListener());
@@ -113,20 +114,16 @@ public class SearchActivity extends Activity {
 	    	}
     }
     
-    private String qfix(String value) {
-	    	return java.net.URLEncoder.encode(value.trim());
-    }
-    
     private String constructSearchUrl() {
 	    	String url = ((KHApplication)getApplicationContext()).getProxy();
 	    	String params = "";
 	    	
-	    String firstname = qfix(((EditText)findViewById(R.id.firstname)).getText().toString());
-	    String lastname = qfix(((EditText)findViewById(R.id.lastname)).getText().toString());
-	    String nickname = qfix(((EditText)findViewById(R.id.nickname)).getText().toString());
+	    String firstname = Lazy.Str.urlEncode(((EditText)findViewById(R.id.firstname)).getText().toString());
+	    String lastname = Lazy.Str.urlEncode(((EditText)findViewById(R.id.lastname)).getText().toString());
+	    String nickname = Lazy.Str.urlEncode(((EditText)findViewById(R.id.nickname)).getText().toString());
 	    
 	    @SuppressWarnings("unchecked")
-	    String weightclass = qfix(((KeyValuePair<String,String>)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
+	    String weightclass = Lazy.Str.urlEncode(((KeyValuePair<String,String>)((Spinner)findViewById(R.id.weightclasses)).getSelectedItem()).getValue());
 	    
 	    if (!firstname.equals("")) {
 		    	params += "firstname=" + firstname + "&";
@@ -161,7 +158,7 @@ public class SearchActivity extends Activity {
 			    adapter.add(new KeyValuePair<String,String>(pair.getString("k"), pair.getString("v")));
 		    }
         } catch (Exception e) {
-	        	// do something
+	        	Log.e(TAG, Lazy.Ex.getStackTrace(e));
         }
     }
 }

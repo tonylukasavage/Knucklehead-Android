@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:sl="http://schemas.android.com/apk/lib/com.savagelook.android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@drawable/carbon_fibre_repeat"
@@ -56,11 +57,14 @@
 		    android:inputType="text"
 		    android:imeOptions="actionDone"
 		/>
-		<Spinner
+		<com.savagelook.android.JsonSpinner
 			android:id="@+id/weightclasses"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:prompt="@string/weight_prompt"
+			sl:json_resource="@raw/weightclasses"
+			sl:json_key="k"
+			sl:json_value="v"
 		/>
 		<Button
 			android:id="@+id/search"
