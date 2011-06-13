@@ -44,9 +44,6 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         this.setTitle("Knuckle Head: MMA Fighter Database");
         
-        // setup spinner and edit text fields 
-        //this.setupKeyValueSpinner(R.id.weightclasses, R.raw.weightclasses);  
-        
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());
         ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new MyOnEditorActionListener());
@@ -143,23 +140,6 @@ public class SearchActivity extends Activity {
 	    } else {
 			return url + params;
 	    }
-    }
-    
-    private void setupKeyValueSpinner(int spinnerId, int jsonId) {
-	    	Spinner s = (Spinner)findViewById(spinnerId);
-        ArrayAdapter<KeyValuePair<String,String>> adapter = new ArrayAdapter<KeyValuePair<String,String>>(this, android.R.layout.simple_spinner_item);
-	    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);	
-        
-        try {
-	        	JSONArray entries = JsonHelper.getJsonArrayFromResource(this, jsonId);
-		    for (int i = 0; i < entries.length(); i++) {
-			    	JSONObject pair = entries.getJSONObject(i);
-			    adapter.add(new KeyValuePair<String,String>(pair.getString("k"), pair.getString("v")));
-		    }
-        } catch (Exception e) {
-	        	Log.e(TAG, Lazy.Ex.getStackTrace(e));
-        }
     }
 }
 
