@@ -1,7 +1,9 @@
 package com.savagelook.knucklehead.activity;
 
+import com.savagelook.android.Toaster;
 import com.savagelook.knucklehead.*;
 import com.savagelook.knucklehead.model.*;
+
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -19,9 +21,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class FighterRecordActivity extends Activity {
 	private AdView adView;
@@ -51,6 +55,14 @@ public class FighterRecordActivity extends Activity {
 			        	fightDetails.add(new FightDetails(fights.getJSONObject(i)));
 		        }
 		        fightList.setAdapter(new FighterRecordAdapter(this, R.layout.listitem_fight, fightDetails));
+		        
+		        ListView list = fightList;
+				list.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						Toaster.toast(FighterRecordActivity.this.getApplicationContext(), "cllick");
+					}
+				});
 	        } else {
 		        	TextView tv = new TextView(this);
 		        	tv.setText("No Fight Record");
@@ -125,9 +137,11 @@ public class FighterRecordActivity extends Activity {
 			return v;
 	    	}
 	    	
+	    	/*
 	    	@Override
 	    	public boolean isEnabled(int position) {
 		    	return false;
 	    	}
+	    	*/
     }
 }
