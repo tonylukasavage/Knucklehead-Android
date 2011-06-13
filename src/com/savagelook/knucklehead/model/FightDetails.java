@@ -10,14 +10,15 @@ public class FightDetails {
 	private String date;
 	private String round;
 	private String time;
+	private String link;
 	
 	public FightDetails() {
-		init("", "", "", "", "", "", "");
+		init("", "", "", "", "", "", "", "");
 	}
 	
 	public FightDetails(String result, String opponent, String method, String event,
-			String date, String round, String time) {
-		init(result, opponent, method, event, date, round, time);	
+			String date, String round, String time, String link) {
+		init(result, opponent, method, event, date, round, time, link);	
 	}
 	
 	public FightDetails(JSONObject json) {
@@ -29,7 +30,8 @@ public class FightDetails {
 				json.getString("event"),
 				json.getString("date"),
 				json.getString("round"),
-				json.getString("time")
+				json.getString("time"),
+				json.getString("link")
 			);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -37,7 +39,7 @@ public class FightDetails {
 	}
 
 	private void init(String result, String opponent, String method, String event,
-			String date, String round, String time) {
+			String date, String round, String time, String link) {
 		this.result = result;
 		this.opponent = opponent;
 		this.method = method;
@@ -45,6 +47,15 @@ public class FightDetails {
 		this.date = date;
 		this.round = round;
 		this.time = time;
+		this.link = link;
+	}
+	
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 	public String getResult() {
