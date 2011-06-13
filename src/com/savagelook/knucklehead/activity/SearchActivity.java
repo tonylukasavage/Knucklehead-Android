@@ -2,7 +2,6 @@ package com.savagelook.knucklehead.activity;
 
 import java.io.IOException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,7 +23,6 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
-import com.savagelook.android.JsonHelper;
 import com.savagelook.android.KeyValuePair;
 import com.savagelook.android.Lazy;
 import com.savagelook.android.UrlJsonAsyncTask;
