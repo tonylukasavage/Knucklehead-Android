@@ -62,8 +62,7 @@ public class FighterListActivity extends ListActivity {
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					Fighter fighter = fighters.get(position);
 					String url = constructFighterUrl(fighter.getLink());
-					//new FighterDetailsTask().execute(url);
-					
+
 					KHApplication kh = (KHApplication)getApplicationContext();
 					FighterDetailsTask task = new FighterDetailsTask(FighterListActivity.this);
 					task.setMessageLoading("Loading fighter details...");
