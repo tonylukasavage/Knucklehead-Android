@@ -39,7 +39,7 @@
 		    android:layout_height="wrap_content"
 		    android:hint="First Name"
 		    android:inputType="text"
-		    android:imeOptions="actionDone"
+		    android:imeOptions="actionSearch"
 		/>
 		<EditText 
 		    android:id="@+id/lastname"
@@ -47,7 +47,7 @@
 		    android:layout_height="wrap_content"
 		    android:hint="Last Name"
 		    android:inputType="text"
-		    android:imeOptions="actionDone"
+		    android:imeOptions="actionSearch"
 		/>
 		<EditText 
 		    android:id="@+id/nickname"
@@ -55,7 +55,7 @@
 		    android:layout_height="wrap_content"
 		    android:hint="Nickname"
 		    android:inputType="text"
-		    android:imeOptions="actionDone"
+		    android:imeOptions="actionSearch"
 		/>
 		<com.savagelook.android.JsonSpinner
 			android:id="@+id/weightclasses"

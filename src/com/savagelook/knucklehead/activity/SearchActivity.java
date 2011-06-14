@@ -41,27 +41,14 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         this.setTitle("Knuckle Head: MMA Fighter Database");
         
-        ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new MyOnEditorActionListener());
-        ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new MyOnEditorActionListener());
-        ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new MyOnEditorActionListener());
+        // set the edittexts up to handle the search button in the keyboard
+        ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new SearchOnEditorActionListener());
+        ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new SearchOnEditorActionListener());
+        ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new SearchOnEditorActionListener());
         
         // setup the search button's click handler
         Button b = (Button)findViewById(R.id.search);
-        b.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String url = constructSearchUrl();
-				if (url.equals("")) {
-					KHToaster.toast(getApplicationContext(), R.string.search_empty);
-				} else {
-					KHApplication kh = (KHApplication)getApplicationContext();
-					FighterSearchTask task = new FighterSearchTask(SearchActivity.this);
-					task.setMessageLoading("Searching for fighters...");
-					task.setConnectionParams(kh.getConnectTimeout(), kh.getReadTimeout(), kh.getRetries());
-					task.execute(url);
-				}		
-			}
-		});
+        b.setOnClickListener(new FighterSearchOnClickListener()); 
         
         // setup AdMob ad view
         adView = (AdView)findViewById(R.id.adView);
@@ -108,7 +95,7 @@ public class SearchActivity extends Activity {
 	    	}
     }
     
-    private String constructSearchUrl() {
+    public String constructSearchUrl() {
 	    	String url = ((KHApplication)getApplicationContext()).getProxy();
 	    	String params = "";
 	    	
@@ -138,17 +125,36 @@ public class SearchActivity extends Activity {
 			return url + params;
 	    }
     }
+    
+    private class FighterSearchOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			String url = constructSearchUrl();
+			if (url.equals("")) {
+				KHToaster.toast(getApplicationContext(), R.string.search_empty);
+			} else {
+				KHApplication kh = (KHApplication)getApplicationContext();
+				FighterSearchTask task = new FighterSearchTask(SearchActivity.this);
+				task.setMessageLoading("Searching for fighters...");
+				task.setConnectionParams(kh.getConnectTimeout(), kh.getReadTimeout(), kh.getRetries());
+				task.execute(url);
+			}
+		}
+    }
+    
+    private class SearchOnEditorActionListener implements OnEditorActionListener {
+	    	@Override
+	    	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+	    		if (actionId == EditorInfo.IME_ACTION_DONE) {
+	    			InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+	    			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	    			return true;	
+	    		} else if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+	    			new FighterSearchOnClickListener().onClick(v);
+	    		}
+	    		return false;
+	    	}
+    }
 }
 
-class MyOnEditorActionListener implements OnEditorActionListener {
-	@Override
-	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		if (actionId == EditorInfo.IME_ACTION_DONE) {
-			InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-			return true;	
-		}
-		return false;
-	}
-}
 
