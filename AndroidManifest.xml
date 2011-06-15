@@ -19,7 +19,7 @@
         </activity>
 		<activity android:name=".activity.FighterListActivity" android:theme="@style/customTheme"
 			android:label="Choose a fighter" android:screenOrientation="portrait"/>
-		<activity android:name=".activity.FighterTabActivity" android:theme="@android:style/Theme.NoTitleBar"
+		<activity android:name=".activity.FighterTabActivity" android:theme="@style/customTheme"
 			android:screenOrientation="portrait"/>
 		<activity android:name=".activity.FighterProfileActivity" 
 			android:screenOrientation="portrait"/>
