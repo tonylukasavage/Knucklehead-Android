@@ -41,7 +41,7 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         this.setTitle("Knuckle Head: MMA Fighter Database");
         
-        // set the edittexts up to handle the search button in the keyboard
+        // set the edittexts up to handle the search button in the keyboards
         ((EditText)findViewById(R.id.firstname)).setOnEditorActionListener(new SearchOnEditorActionListener());
         ((EditText)findViewById(R.id.lastname)).setOnEditorActionListener(new SearchOnEditorActionListener());
         ((EditText)findViewById(R.id.nickname)).setOnEditorActionListener(new SearchOnEditorActionListener());
