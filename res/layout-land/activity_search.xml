@@ -6,93 +6,119 @@
 	android:background="@drawable/carbon_fibre_repeat"
 	android:id="@+id/main_view"
 	android:orientation="vertical"
+	android:gravity="center"
 	>
+	<!--  
 	<ScrollView
 		android:layout_width="fill_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="1"
 	    >
+	    -->
+	    <TextView
+		    android:text="Fighter Search"
+		    android:textColor="#eeeeee"
+		    android:shadowColor="#888888"
+		    android:shadowDx="1.0"
+		    android:shadowDy="1.0"
+		    android:shadowRadius="1.0"
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:textSize="26dip"
+		    android:textStyle="bold"
+		    android:paddingBottom="6dip"
+	    />
 		<LinearLayout 
-		    android:orientation="vertical"
+		    android:orientation="horizontal"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:gravity="center"
-			android:paddingLeft="80dip"
-			android:paddingRight="80dip"
+			android:paddingLeft="0dip"
+			android:paddingRight="0dip"
 		    >
-		    <TextView
-			    android:text="Fighter Search"
-			    android:textColor="#eeeeee"
-			    android:shadowColor="#888888"
-			    android:shadowDx="1.0"
-			    android:shadowDy="1.0"
-			    android:shadowRadius="1.0"
+		    <LinearLayout
+			    android:orientation="vertical"
+			    android:layout_width="0dip"
+			    android:layout_weight="0.5"
 			    android:layout_height="wrap_content"
-			    android:layout_width="wrap_content"
-			    android:textSize="26dip"
-			    android:textStyle="bold"
-			    android:paddingBottom="6dip"
-		    />
-		    <EditText 
-			    android:id="@+id/firstname"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:hint="First Name"
-			    android:inputType="text"
-			    android:imeOptions="actionNext"
-			/>
-			<EditText 
-			    android:id="@+id/lastname"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:hint="Last Name"
-			    android:inputType="text"
-			    android:imeOptions="actionNext"
-			/>
-			<EditText 
-			    android:id="@+id/nickname"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:hint="Nickname"
-			    android:inputType="text"
-			    android:imeOptions="actionNext"
-			/>
-			<com.savagelook.android.JsonSpinner
-				android:id="@+id/weightclasses"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:prompt="@string/weight_prompt"
-				sl:json_resource="@raw/weightclasses"
-				sl:json_key="k"
-				sl:json_value="v"
-			/>
-			<Button
-				android:id="@+id/search"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+			    android:gravity="center_horizontal"
 				android:paddingLeft="20dip"
+				android:paddingRight="10dip"
+			    >
+			    <EditText 
+				    android:id="@+id/firstname"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:hint="First Name"
+				    android:inputType="text"
+				    android:imeOptions="actionSearch"
+				/>
+				<EditText 
+				    android:id="@+id/lastname"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:hint="Last Name"
+				    android:inputType="text"
+				    android:imeOptions="actionNext"
+				/>
+				<EditText 
+				    android:id="@+id/nickname"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:hint="Nickname"
+				    android:inputType="text"
+				    android:imeOptions="actionNext"
+				/>
+			</LinearLayout>
+			<RelativeLayout
+			    android:layout_width="0dip"
+			    android:layout_weight="0.5"
+			    android:layout_height="fill_parent"
+				android:paddingLeft="10dip"
 				android:paddingRight="20dip"
-				android:layout_marginTop="10dip"
-				android:text="Search"
-				android:textSize="28dip"
-				android:textColor="#eeeeee"
-				android:shadowColor="#F000"
-				android:shadowDx="2.0"
-				android:shadowDy="2.0"
-				android:shadowRadius="2.0"
-				android:background="@drawable/search_button"
-			/>
+			    >
+			    <com.savagelook.android.JsonSpinner
+					android:id="@+id/weightclasses"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:prompt="@string/weight_prompt"
+					android:layout_alignParentTop="true"
+					sl:json_resource="@raw/weightclasses"
+					sl:json_key="k"
+					sl:json_value="v"
+				/>
+				<Button
+					android:id="@+id/search"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Search"
+					android:textSize="28dip"
+					android:textColor="#eeeeee"
+					android:shadowColor="#F000"
+					android:shadowDx="2.0"
+					android:shadowDy="2.0"
+					android:shadowRadius="2.0"
+					android:background="@drawable/search_button"
+					android:layout_alignParentBottom="true"
+					android:layout_alignParentRight="true"
+				/>
+			</RelativeLayout>		
 		</LinearLayout>
-	</ScrollView>
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			/>
+	<!-- </ScrollView> -->
 	<com.google.ads.AdView
 		xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
 		android:id="@+id/adView"
-		android:layout_width="wrap_content" 
+		android:layout_width="fill_parent" 
 		ads:adSize="BANNER"
 		ads:adUnitId="@string/admobId"
 		ads:loadAdOnCreate="false"
 		android:visibility="visible"
 		android:layout_gravity="bottom"
-		android:layout_height="wrap_content"
+		android:layout_height="50dip"
 		/>
 </LinearLayout>
