@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 		<activity android:name=".activity.FighterListActivity" android:theme="@style/customTheme"
-			android:label="Choose a fighter" android:screenOrientation="portrait"/>
+			android:label="Choose a fighter"/>
 		<activity android:name=".activity.FighterTabActivity" android:theme="@style/customTheme"
 			android:screenOrientation="portrait"/>
 		<activity android:name=".activity.FighterProfileActivity" 

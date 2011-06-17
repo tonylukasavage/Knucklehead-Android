@@ -51,7 +51,7 @@
 				    android:layout_height="wrap_content"
 				    android:hint="First Name"
 				    android:inputType="text"
-				    android:imeOptions="actionSearch"
+				    android:imeOptions="actionDone"
 				/>
 				<EditText 
 				    android:id="@+id/lastname"
@@ -59,7 +59,7 @@
 				    android:layout_height="wrap_content"
 				    android:hint="Last Name"
 				    android:inputType="text"
-				    android:imeOptions="actionNext"
+				    android:imeOptions="actionDone"
 				/>
 				<EditText 
 				    android:id="@+id/nickname"
@@ -67,7 +67,7 @@
 				    android:layout_height="wrap_content"
 				    android:hint="Nickname"
 				    android:inputType="text"
-				    android:imeOptions="actionNext"
+				    android:imeOptions="actionDone"
 				/>
 			</LinearLayout>
 			<RelativeLayout
