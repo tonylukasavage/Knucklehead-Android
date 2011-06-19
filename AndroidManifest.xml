@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.savagelook.knucklehead"
-      android:versionCode="4"
+      android:versionCode="5"
       android:versionName="1.2.1">
     <uses-sdk android:minSdkVersion="8" />
 
@@ -19,14 +19,10 @@
         </activity>
 		<activity android:name=".activity.FighterListActivity" android:theme="@style/customTheme"
 			android:label="Choose a fighter"/>
-		<activity android:name=".activity.FighterTabActivity" android:theme="@style/customTheme"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".activity.FighterProfileActivity" 
-			android:screenOrientation="portrait"/>
-		<activity android:name=".activity.FighterRecordActivity" 
-			android:screenOrientation="portrait"/>
-		<activity android:name=".activity.FighterGalleryActivity" 
-			android:screenOrientation="portrait"/>
+		<activity android:name=".activity.FighterTabActivity" android:theme="@style/customTheme"/>
+		<activity android:name=".activity.FighterProfileActivity" />
+		<activity android:name=".activity.FighterRecordActivity" />
+		<activity android:name=".activity.FighterGalleryActivity" />
 		<activity android:name="com.google.ads.AdActivity"
               android:configChanges="keyboard|keyboardHidden|orientation"/>
     </application>
