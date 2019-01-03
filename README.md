@@ -1,4 +1,4 @@
-> **WARNING: This app does not currently work as the accompanying screen scraper is woefully out of date and is no longer maintained. By extension this app is no longer maintained and hasn't been used or tested in years. The repo exists only for archival purposes.**
+> **WARNING: This app does not currently work as the accompanying [screen scraper](https://github.com/tonylukasavage/Knuckle-Head-PHP) is woefully out of date and is no longer maintained. By extension this app is no longer maintained and hasn't been used or tested in years. The repo exists only for archival purposes.**
 
 Knucklehead
 =======
