@@ -3,4 +3,4 @@
 Knucklehead
 =======
 
-Knucklehead is a native Android app for getting the stats of mixed martial arts fighters. You can search for your favorite fighters and find detailed profiles, fight records, and picture galleries.  
+Knucklehead is a native Android app for getting the stats of mixed martial arts fighters. You can search for your favorite fighters and find detailed profiles, fight records, and picture galleries. The code also shows how you can integrate the [admob](https://admob.google.com/home/) library for potential monetization of Android apps.
